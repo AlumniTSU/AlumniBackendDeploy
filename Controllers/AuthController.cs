@@ -17,6 +17,9 @@ using System.Text;
 using backend.Dtos.User;
 using backend.Entities;
 using backend.Mappers;
+using backend.Repositories.Interfaces;
+
+using backend.Services.Interfaces;
 
 namespace backend.Controllers
 {
@@ -27,9 +30,12 @@ namespace backend.Controllers
         private readonly AlumniDBContext _context;
         private readonly IConfiguration _configuration;
 
-        public AuthController(AlumniDBContext context, IConfiguration configuration)
+        private readonly IAuthService _authService;        
+
+
+        public AuthController(IAuthService authService, IConfiguration configuration)
         {
-            _context = context;
+            _authService = authService;
             _configuration = configuration;
         }
 
@@ -85,36 +91,50 @@ namespace backend.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDto userDto)
         {
-            var userModel = userDto.FromRegisterToUser();
+            // var userModel = userDto.FromRegisterToUser();
+            // // await _context.Users.AddAsync(userModel);
+            // // await _context.SaveChangesAsync();
 
-            await _context.Users.AddAsync(userModel);
-            await _context.SaveChangesAsync();
+            
+            // await _userRepository.AddAsync(userModel);
 
+            // return Ok();
+
+            await _authService.RegisterAsync(userDto);
             return Ok();
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto userDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userDto.Email);
+            // var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userDto.Email);
 
-            if(user == null)
-            {
-                return Unauthorized("Invalid Credentials");
-            }
+            // if(user == null)
+            // {
+            //     return Unauthorized("Invalid Credentials");
+            // }
 
-            var passwordHasher = new PasswordHasher<User>();
+            // var passwordHasher = new PasswordHasher<User>();
 
-            var result = passwordHasher.VerifyHashedPassword(user, user.HashedPassword, userDto.Password);
+            // var result = passwordHasher.VerifyHashedPassword(user, user.HashedPassword, userDto.Password);
 
-            if(result == PasswordVerificationResult.Failed)
+            // if(result == PasswordVerificationResult.Failed)
+            // {
+            //     return Unauthorized("Invalid credentials");
+            // }
+
+            // var token = GenerateJwtToken(user);
+
+            // return Ok(new{token});
+
+            var token = await _authService.LoginAsync(userDto);
+
+            if(token == null)
             {
                 return Unauthorized("Invalid credentials");
             }
 
-            var token = GenerateJwtToken(user);
-
-            return Ok(new{token});
+            return Ok(new {token});
         }
 
 

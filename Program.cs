@@ -4,6 +4,11 @@ using System.Text;
 
 using Microsoft.EntityFrameworkCore;
 using backend.Entities;
+using backend.Repositories;
+using backend.Repositories.Interfaces;
+
+using backend.Services;
+using backend.Services.Interfaces;
 // using Microsoft.OpenApi.Models;
 
 
@@ -64,6 +69,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<AlumniDBContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
 ));
+
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 builder.Services.AddAuthentication(options =>
