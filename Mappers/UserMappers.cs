@@ -19,7 +19,8 @@ namespace backend.Mappers
             {
                 PersonalId = userDto.PersonalId,
                 PhoneNumber = userDto.PhoneNumber,
-                UserName = $"{userDto.Name} {userDto.Surname}",
+                FirstName = userDto.Name,
+                LastName = userDto.Surname,
                 Email = userDto.Email,
                 HashedPassword = passwordHasher.HashPassword(null!, userDto.Password),
                 CreatedAt = DateTime.UtcNow

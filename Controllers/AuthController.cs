@@ -27,7 +27,7 @@ namespace backend.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AlumniDBContext _context;
+        // private readonly AlumniDBContext _context;
         private readonly IConfiguration _configuration;
 
         private readonly IAuthService _authService;        
@@ -40,51 +40,51 @@ namespace backend.Controllers
         }
 
 
-        private string GenerateJwtToken(User user)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(
-                    ClaimTypes.NameIdentifier,
-                    user.UserId.ToString()
-                ),
+        // private string GenerateJwtToken(User user)
+        // {
+        //     var claims = new List<Claim>
+        //     {
+        //         new Claim(
+        //             ClaimTypes.NameIdentifier,
+        //             user.UserId.ToString()
+        //         ),
 
-                new Claim(
-                    ClaimTypes.Email,
-                    user.Email
-                ),
+        //         new Claim(
+        //             ClaimTypes.Email,
+        //             user.Email
+        //         ),
 
-                new Claim(
-                    ClaimTypes.Name,
-                    user.UserName
-                ),
+        //         new Claim(
+        //             ClaimTypes.Name,
+        //             user.UserName
+        //         ),
 
-                new Claim(
-                    ClaimTypes.Role,
-                    user.RoleId.ToString()
-                )
-            };
+        //         new Claim(
+        //             ClaimTypes.Role,
+        //             user.RoleId.ToString()
+        //         )
+        //     };
 
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(
-                    _configuration["JWT:SigningKey"]!
-                )
-            );
+        //     var key = new SymmetricSecurityKey(
+        //         Encoding.UTF8.GetBytes(
+        //             _configuration["JWT:SigningKey"]!
+        //         )
+        //     );
 
-            var credentials = new SigningCredentials(
-                key, SecurityAlgorithms.HmacSha256
-            );
+        //     var credentials = new SigningCredentials(
+        //         key, SecurityAlgorithms.HmacSha256
+        //     );
 
-            var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:Issuer"],
-                audience: _configuration["JWT:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),
-                signingCredentials: credentials
-            );
+        //     var token = new JwtSecurityToken(
+        //         issuer: _configuration["JWT:Issuer"],
+        //         audience: _configuration["JWT:Audience"],
+        //         claims: claims,
+        //         expires: DateTime.UtcNow.AddHours(1),
+        //         signingCredentials: credentials
+        //     );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        //     return new JwtSecurityTokenHandler().WriteToken(token);
+        // }
 
         
         
@@ -100,6 +100,8 @@ namespace backend.Controllers
 
             // return Ok();
 
+            
+
             await _authService.RegisterAsync(userDto);
             return Ok();
         }
@@ -107,25 +109,7 @@ namespace backend.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto userDto)
         {
-            // var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userDto.Email);
-
-            // if(user == null)
-            // {
-            //     return Unauthorized("Invalid Credentials");
-            // }
-
-            // var passwordHasher = new PasswordHasher<User>();
-
-            // var result = passwordHasher.VerifyHashedPassword(user, user.HashedPassword, userDto.Password);
-
-            // if(result == PasswordVerificationResult.Failed)
-            // {
-            //     return Unauthorized("Invalid credentials");
-            // }
-
-            // var token = GenerateJwtToken(user);
-
-            // return Ok(new{token});
+            
 
             var token = await _authService.LoginAsync(userDto);
 

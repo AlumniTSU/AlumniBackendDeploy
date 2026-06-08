@@ -9,6 +9,7 @@ using backend.Dtos.User;
 using backend.Mappers;
 using Microsoft.AspNetCore.Identity;
 using backend.Entities;
+using System.Diagnostics;
 
 
 namespace backend.Services
@@ -26,7 +27,9 @@ namespace backend.Services
         {
             var userModel = userDto.FromRegisterToUser();
 
+            //var sw = Stopwatch.StartNew();
             await _userRepository.AddAsync(userModel);
+            //Console.WriteLine($"register: {sw.ElapsedMilliseconds} ms");
         }
 
         public async Task<string?> LoginAsync(LoginUserDto userDto)
@@ -40,7 +43,12 @@ namespace backend.Services
 
             var passwordHasher = new PasswordHasher<User>();
 
+            
+            //var sw = Stopwatch.StartNew();
+
             var result = passwordHasher.VerifyHashedPassword(user, user.HashedPassword, userDto.Password);
+
+            //Console.WriteLine($"Hash verification: {sw.ElapsedMilliseconds} ms");
 
             if(result == PasswordVerificationResult.Failed)
             {
