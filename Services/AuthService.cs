@@ -12,15 +12,23 @@ using backend.Entities;
 using System.Diagnostics;
 
 
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
+using Microsoft.IdentityModel.Tokens;
+
 namespace backend.Services
 {
     public class AuthService : IAuthService
     {
-        public readonly IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(IUserRepository userRepository)
+        public AuthService(IUserRepository userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
+            _configuration = configuration;
         }
 
         public async Task RegisterAsync(RegisterUserDto userDto)
@@ -56,6 +64,57 @@ namespace backend.Services
             }
 
             return "TEMP_TOKEN";
+        }
+
+        private string GenerateJwtToken(User user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(
+                    ClaimTypes.NameIdentifier,
+                    user.UserId.ToString()
+                ),
+
+                new Claim(
+                    ClaimTypes.Email,
+                    user.Email
+                ),
+
+                new Claim(
+                    ClaimTypes.Name,
+                    user.FirstName
+                ),
+
+                new Claim(
+                    ClaimTypes.Surname,
+                    user.LastName
+                ),
+
+                new Claim(
+                    ClaimTypes.Role,
+                    user.RoleId.ToString()
+                )
+            };
+
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(
+                    _configuration["JWT:SigningKey"]!
+                )
+            );
+
+            var credentials = new SigningCredentials(
+                key, SecurityAlgorithms.HmacSha256
+            );
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:Issuer"],
+                audience: _configuration["JWT:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
