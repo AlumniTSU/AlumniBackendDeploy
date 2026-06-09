@@ -33,6 +33,13 @@ namespace backend.Services
 
         public async Task RegisterAsync(RegisterUserDto userDto)
         {
+            var existingUser = await _userRepository.GetByEmailAsync(userDto.Email);
+
+            if(existingUser != null)
+            {
+                throw new Exception("Email already exists");
+            }
+            
             var userModel = userDto.FromRegisterToUser();
 
             //var sw = Stopwatch.StartNew();
