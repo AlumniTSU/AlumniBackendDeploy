@@ -58,19 +58,14 @@ namespace backend.Services
 
             var passwordHasher = new PasswordHasher<User>();
 
-            
-            //var sw = Stopwatch.StartNew();
-
             var result = passwordHasher.VerifyHashedPassword(user, user.HashedPassword, userDto.Password);
-
-            //Console.WriteLine($"Hash verification: {sw.ElapsedMilliseconds} ms");
 
             if(result == PasswordVerificationResult.Failed)
             {
                 return null;
             }
 
-            return "TEMP_TOKEN";
+            return GenerateJwtToken(user);
         }
 
         private string GenerateJwtToken(User user)

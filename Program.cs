@@ -73,6 +73,7 @@ builder.Services.AddDbContext<AlumniDBContext>(options => options.UseSqlServer(
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 
 builder.Services.AddAuthentication(options =>
@@ -83,6 +84,17 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine("AUTH FAILED:");
+            Console.WriteLine(context.Exception.Message);
+
+            return Task.CompletedTask;
+        }
+    };
+    
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -96,6 +108,8 @@ builder.Services.AddAuthentication(options =>
 
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!))
     };
+
+    
 });
 
 builder.Services.AddAuthorization();

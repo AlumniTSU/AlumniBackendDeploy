@@ -76,23 +76,23 @@ namespace backend.Controllers
         }
 
 
-        [Authorize]
-        [HttpGet("me")]
-        public IActionResult Me()
-        {
-            // return Ok(new
-            // {
-            //     Message = "You are authenticated"
-            // });
+        // [Authorize]
+        // [HttpGet("me")]
+        // public IActionResult Me()
+        // {
+        //     // return Ok(new
+        //     // {
+        //     //     Message = "You are authenticated"
+        //     // });
 
-            return Ok(new
-            {
-                UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value,
+        //     return Ok(new
+        //     {
+        //         UserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value,
 
-                Email = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value,
+        //         Email = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value,
 
-                UserName = User.Identity?.Name
-            });
-        }
+        //         UserName = User.Identity?.Name
+        //     });
+        // }
     }
 }
