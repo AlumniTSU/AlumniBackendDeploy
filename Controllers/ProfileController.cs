@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using backend.Services.Interfaces;
+using backend.Dtos.Profile;
 
 namespace backend.Controllers
 {
@@ -97,6 +98,29 @@ namespace backend.Controllers
             return Ok(
                 Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString())
             );
+        }
+
+        [Authorize]
+        [HttpPut("me")]
+        public async Task<IActionResult> UpdateProfile(UpdateProfileDto dto)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if(userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            int userId = Convert.ToInt32(userIdClaim);
+
+            var success = await _profileService.UpdateProfileAsync(userId, dto);
+
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }
