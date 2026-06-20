@@ -22,33 +22,61 @@ namespace backend.Controllers
         }
 
 
+//         [Authorize]
+// [HttpGet("me")]
+// public async Task<IActionResult> Me()
+// {
+//     var userIdClaim =
+//         User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+//     if(userIdClaim == null)
+//         return Unauthorized();
+
+//     int userId = int.Parse(userIdClaim);
+
+//     var user =
+//         await _profileService.GetProfileAsync(userId);
+
+//     if(user == null)
+//         return NotFound();
+
+//     return Ok(new
+//     {
+//         user.UserId,
+//         user.FirstName,
+//         user.LastName,
+//         user.Email
+//     });
+// }
+
         [Authorize]
-[HttpGet("me")]
-public async Task<IActionResult> Me()
-{
-    var userIdClaim =
-        User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        [HttpGet("me")]
+        public async Task<IActionResult> Me()
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-    if(userIdClaim == null)
-        return Unauthorized();
+            if(userIdClaim == null)
+            {
+                return Unauthorized();
+            }
 
-    int userId = int.Parse(userIdClaim);
+            int userId = int.Parse(userIdClaim);
 
-    var user =
-        await _profileService.GetProfileAsync(userId);
+            var user = await _profileService.GetProfileAsync(userId);
 
-    if(user == null)
-        return NotFound();
+            if(user == null)
+            {
+                return NotFound();
+            }
 
-    return Ok(new
-    {
-        user.UserId,
-        user.FirstName,
-        user.LastName,
-        user.Email
-    });
-}
-
+            return Ok(new
+            {
+                user.UserId,
+                user.FirstName,
+                user.LastName,
+                user.Email
+            });
+        }
 
         [Authorize]
         [HttpGet("claims")]
