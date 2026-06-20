@@ -122,5 +122,31 @@ namespace backend.Controllers
 
             return Ok();
         }
+
+        [Authorize]
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword(UpdatePasswordDto dto)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if(userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+
+            int userId = Convert.ToInt32(userIdClaim);
+
+            var success = await _profileService.UpdatePasswordAsync(userId, dto);
+
+            if (!success)
+            {
+                return BadRequest("Invalid old password.");
+            }
+
+            return Ok(new
+            {
+                Message = "Password changed successfully."
+            });
+        }
     }
 }
