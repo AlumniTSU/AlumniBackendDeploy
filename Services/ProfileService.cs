@@ -65,6 +65,8 @@ namespace backend.Services
 
             user.HashedPassword = passwordHasher.HashPassword(user, dto.NewPassword);
 
+            await _userRepository.UpdateAsync(user);
+
             return true;
         }
     }
