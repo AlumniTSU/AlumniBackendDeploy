@@ -7,6 +7,8 @@ using backend.Entities;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
 
+using Microsoft.AspNetCore.Identity;
+
 namespace backend.Services
 {
     public class ProfileService : IProfileService
@@ -43,6 +45,27 @@ namespace backend.Services
             return true;
         }
 
-        
+        public async Task<bool> UpdatePasswordAsync(int userId, UpdatePasswordDto dto)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if(user == null)
+            {
+                return false;
+            }
+            
+            
+            var passwordHasher = new PasswordHasher<User>();
+
+            var result = passwordHasher.VerifyHashedPassword(user, user.HashedPassword, dto.OldPassword);
+
+            if(result == PasswordVerificationResult.Failed)
+            {
+                return false;
+            }
+
+            user.HashedPassword = passwordHasher.HashPassword(user, dto.NewPassword);
+
+            return true;
+        }
     }
 }
