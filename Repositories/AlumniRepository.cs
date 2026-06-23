@@ -20,18 +20,13 @@ namespace backend.Repositories
 
         public async Task<List<AlumniDto>> GetAllAsync()
         {
-            return await _context.AlumniProfiles
-                .Include(a => a.User)
-                .Select(a => new AlumniDto
-                {
-                    UserId = a.User.UserId,
-                    FirstName = a.User.LastName,
-                    Email = a.User.Email,
-                    PhoneNumber = a.User.PhoneNumber,
-                    Bio = a.Bio,
-                    ContactEmail = a.ContactEmail,
-                    ContactPhoneNumber = a.ContactPhoneNumber
-                }).ToListAsync();
+            return await _context.Students.Where(s => s.HasUniversityFinished).Select(s => new AlumniDto
+            {
+                StudentId = s.StudentId,
+                StudentFirstname = s.StudentFirstName,
+                Email = s.Email,
+                PhoneNumber = s.PhoneNumber
+            }).ToListAsync();
         }
     }
 }

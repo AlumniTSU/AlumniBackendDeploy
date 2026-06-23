@@ -7,13 +7,10 @@ namespace backend.Dtos.Alumni
 {
     public class AlumniDto
     {
-        public int UserId {get; set;}
-        public string? FirstName {get; set;}
-        public string? LastName {get; set;}
-        public string Email {get; set;} = null!;
+        public long StudentId {get; set;}
+        public string StudentFirstname {get; set;} = null!;
+        public string? StudentLastName {get; set;}
+        public string? Email {get; set;}
         public string? PhoneNumber {get; set;}
-        public string? Bio {get; set;}
-        public string? ContactEmail{get; set;}
-        public string? ContactPhoneNumber {get; set;}
     }
 }
