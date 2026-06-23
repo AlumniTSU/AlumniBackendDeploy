@@ -31,7 +31,7 @@ namespace backend.Repositories
 
         public async Task<AlumniDto?> GetByIdAsync(int id)
         {
-            var student = await _context.Students.Where(s => s.HasUniversityFinished).FirstOrDefaultAsync(s => s.StudentId == id);
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.HasUniversityFinished && s.StudentId == id);
 
             if(student == null)
             {

@@ -33,6 +33,11 @@ namespace backend.Controllers
         {
             var alumni = await _alumniService.GetByIdAsync(id);
 
+            if(alumni == null)
+            {
+                return NotFound();
+            }
+
             return Ok(alumni);
         }
     }
