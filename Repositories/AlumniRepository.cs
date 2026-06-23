@@ -28,5 +28,26 @@ namespace backend.Repositories
                 PhoneNumber = s.PhoneNumber
             }).ToListAsync();
         }
+
+        public async Task<AlumniDto?> GetByIdAsync(int id)
+        {
+            var student = await _context.Students.Where(s => s.HasUniversityFinished).FirstOrDefaultAsync(s => s.StudentId == id);
+
+            if(student == null)
+            {
+                return null;
+            }
+
+            
+
+            return new AlumniDto
+            {
+                StudentId = student.StudentId,
+                StudentFirstname = student.StudentFirstName,
+                StudentLastName = student.StudentLastName,
+                Email = student.Email,
+                PhoneNumber = student.PhoneNumber
+            };
+        }
     }
 }

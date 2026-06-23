@@ -26,5 +26,14 @@ namespace backend.Controllers
             return Ok(alumni);
         }
         
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            var alumni = await _alumniService.GetByIdAsync(id);
+
+            return Ok(alumni);
+        }
     }
 }

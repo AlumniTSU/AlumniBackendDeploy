@@ -9,5 +9,6 @@ namespace backend.Services.Interfaces
     public interface IAlumniService
     {
         Task<List<AlumniDto>> GetAllAsync();
+        Task<AlumniDto> GetByIdAsync(int id);
     }
 }

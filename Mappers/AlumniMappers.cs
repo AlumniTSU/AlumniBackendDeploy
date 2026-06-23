@@ -9,11 +9,11 @@ namespace backend.Mappers
 {
     public static class AlumniMappers
     {
-        // static AlumniDto ToAlumniDto(this AlumniProfile alumniProfile)
+        // static AlumniDto ToAlumniDto(this Student studentModel)
         // {
         //     return new AlumniDto
         //     {
-        //         UserId = alumniProfile.UserId,
+        //         StudentFirstName = studentModel.StudentFirstName,
         //     }
         // }
     }

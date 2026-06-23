@@ -9,5 +9,6 @@ namespace backend.Repositories.Interfaces
     public interface IAlumniRepository
     {
         Task<List<AlumniDto>> GetAllAsync();
+        Task<AlumniDto> GetByIdAsync(int id);
     }
 }
