@@ -11,6 +11,7 @@ namespace backend.Repositories.Interfaces
         Task<User?> GetByEmailAsync(string email);
         Task AddAsync(User user);
         Task<User?> GetByIdAsync(int id);
+        Task<User?> GetByStudentIdAsync(int studentId);
         Task UpdateAsync(User user);
     }
 }

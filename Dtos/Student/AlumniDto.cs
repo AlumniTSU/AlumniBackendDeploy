@@ -7,7 +7,7 @@ namespace backend.Dtos.Student
 {
     public class AlumniDto
     {
-        public long StudentId {get; set;}
+        public int StudentId {get; set;}
         public string StudentFirstName {get; set;} = null!;
         public string? StudentLastName {get; set;}
         public string? Email {get; set;}

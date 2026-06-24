@@ -49,6 +49,13 @@ namespace backend.Services
             {
                 throw new Exception("Email already exists");
             }
+
+
+            var existingStudentUser = await _userRepository.GetByStudentIdAsync((int)student.StudentId);            
+            if(existingStudentUser != null)
+            {
+                throw new Exception("Student already registered");
+            }
             
             var userModel = userDto.FromRegisterToUser();
 

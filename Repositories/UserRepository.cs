@@ -33,6 +33,13 @@ namespace backend.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
         }
 
+        public async Task<User?> GetByStudentIdAsync(int studentId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.StudentId == studentId);
+        }
+        
+        
+
         public async Task UpdateAsync(User user)
         {
             _context.Users.Update(user);

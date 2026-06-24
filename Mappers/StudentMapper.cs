@@ -15,7 +15,7 @@ namespace backend.Mappers
         {
             return new AlumniDto
             {
-                StudentId = studentModel.StudentId,
+                StudentId = (int)studentModel.StudentId,
                 StudentFirstName = studentModel.StudentFirstName,
                 StudentLastName = studentModel.StudentLastName,
                 Email = studentModel.Email,
@@ -27,7 +27,7 @@ namespace backend.Mappers
         {
             return new AlumniDetailsDto
             {
-                StudentId = student.StudentId,
+                StudentId = (int)student.StudentId,
                 FirstName = student.StudentFirstName,
                 LastName = student.StudentLastName,
                 Email = student.Email,
