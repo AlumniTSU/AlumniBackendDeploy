@@ -11,5 +11,6 @@ namespace backend.Services.Interfaces
     {
         Task<List<AlumniDto>> GetAllAsync(QueryObject? search);
         Task<AlumniDto?> GetByIdAsync(int id);
+        Task<AlumniDetailsDto?> GetDetailsByIdAsync(int id);
     }
 }

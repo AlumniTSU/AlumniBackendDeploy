@@ -23,20 +23,20 @@ namespace backend.Mappers
             };
         }
 
-        public static AlumniDetailsDto ToAlumniDetailsDto(this Student student)
-        {
-            return new AlumniDetailsDto
-            {
-                StudentId = (int)student.StudentId,
-                FirstName = student.StudentFirstName,
-                LastName = student.StudentLastName,
-                Email = student.Email,
-                PhoneNumber = student.PhoneNumber,
-                Bio = null,
-                ContactEmail = student.Email,
-                ContactPhoneNumber = student.PhoneNumber
-            };
-        }
+        // public static AlumniDetailsDto ToAlumniDetailsDto(this Student student)
+        // {
+        //     return new AlumniDetailsDto
+        //     {
+        //         StudentId = (int)student.StudentId,
+        //         FirstName = student.StudentFirstName,
+        //         LastName = student.StudentLastName,
+        //         Email = student.Email,
+        //         PhoneNumber = student.PhoneNumber,
+        //         Bio = null,
+        //         ContactEmail = student.Email,
+        //         ContactPhoneNumber = student.PhoneNumber
+        //     };
+        // }
         
     }
 }

@@ -32,7 +32,7 @@ namespace backend.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var alumni = await _alumniService.GetByIdAsync(id);
+            var alumni = await _alumniService.GetDetailsByIdAsync(id);
 
             if(alumni == null)
             {

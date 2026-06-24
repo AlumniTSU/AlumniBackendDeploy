@@ -61,5 +61,30 @@ namespace backend.Repositories
 
             return student.ToAlumniDto();
         }
+
+        public async Task<AlumniDetailsDto?> GetDetailsByIdAsync(int id)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == id);
+
+            if(student == null)
+            {
+                return null;
+            }
+
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.StudentId == student.StudentId);
+
+            AlumniProfile? profile = null;
+
+            if(user != null)
+            {
+                profile = await _context.AlumniProfiles.FirstOrDefaultAsync(p => p.UserId == user.UserId);
+            }
+
+            return AlumniMapper.ToAlumniDetailsDto(student, user, profile);
+        }
+        
+        
+        
     }
 }

@@ -27,5 +27,10 @@ namespace backend.Services
         {
             return await _alumniContext.GetByIdAsync(id);
         }
+
+        public async Task<AlumniDetailsDto?> GetDetailsByIdAsync(int id)
+        {
+            return await _alumniContext.GetDetailsByIdAsync(id);
+        }
     }
 }
