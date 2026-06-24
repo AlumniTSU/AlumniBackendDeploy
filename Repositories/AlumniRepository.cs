@@ -7,6 +7,7 @@ using backend.Dtos.Student;
 using backend.Entities;
 using backend.Repositories.Interfaces;
 using backend.Mappers;
+using backend.Helpers;
 
 namespace backend.Repositories
 {
@@ -19,17 +20,32 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<List<AlumniDto>> GetAllAsync()
+        public async Task<List<AlumniDto>> GetAllAsync(QueryObject? search)
         {
-            // return await _context.Students.Where(s => s.HasUniversityFinished).Select(s => new AlumniDto
-            // {
-            //     StudentId = s.StudentId,
-            //     StudentFirstname = s.StudentFirstName,
-            //     Email = s.Email,
-            //     PhoneNumber = s.PhoneNumber
-            // }).ToListAsync();
+            var query = _context.Students.AsNoTracking().Where(s => s.HasUniversityFinished);
 
-            return await _context.Students.Where(s => s.HasUniversityFinished).Select(s => s.ToAlumniDto()).ToListAsync();
+            
+            if (!string.IsNullOrWhiteSpace(search?.FirstName))
+            {
+                query = query.Where(s => s.StudentFirstName.Contains(search.FirstName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.LastName))
+            {
+                query = query.Where(s => s.StudentLastName!.Contains(search.LastName));
+            }
+
+            int pageNumber = search?.PageNumber ?? 1;
+            int pageSize = search?.PageSize ?? 20;
+
+            int skipNumber = (pageNumber - 1) * pageSize;
+             
+
+             
+            return await query
+                .Skip(skipNumber)
+                .Take(pageSize)
+                .Select(s => s.ToAlumniDto()).ToListAsync();
         }
 
         public async Task<AlumniDto?> GetByIdAsync(int id)

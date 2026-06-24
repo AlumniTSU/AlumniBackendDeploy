@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Helpers;
 using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +20,9 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject? search)
         {
-            var alumni = await _alumniService.GetAllAsync();
+            var alumni = await _alumniService.GetAllAsync(search);
 
             return Ok(alumni);
         }

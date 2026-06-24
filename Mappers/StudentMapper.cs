@@ -17,7 +17,7 @@ namespace backend.Mappers
             {
                 StudentId = studentModel.StudentId,
                 StudentFirstName = studentModel.StudentFirstName,
-                StudentLastName = studentModel.StudentFirstName,
+                StudentLastName = studentModel.StudentLastName,
                 Email = studentModel.Email,
                 PhoneNumber = studentModel.PhoneNumber
             };
