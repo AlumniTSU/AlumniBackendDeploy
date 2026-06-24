@@ -35,13 +35,15 @@ namespace backend.Repositories
                 query = query.Where(s => s.StudentLastName!.Contains(search.LastName));
             }
 
+
+            query = query.OrderBy(s => s.StudentId);
+            
             int pageNumber = search?.PageNumber ?? 1;
             int pageSize = search?.PageSize ?? 20;
 
             int skipNumber = (pageNumber - 1) * pageSize;
-             
-
-             
+            
+            
             return await query
                 .Skip(skipNumber)
                 .Take(pageSize)
