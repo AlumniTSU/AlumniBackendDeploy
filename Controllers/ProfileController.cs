@@ -22,34 +22,6 @@ namespace backend.Controllers
             _profileService = profileService;
         }
 
-
-//         [Authorize]
-// [HttpGet("me")]
-// public async Task<IActionResult> Me()
-// {
-//     var userIdClaim =
-//         User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-//     if(userIdClaim == null)
-//         return Unauthorized();
-
-//     int userId = int.Parse(userIdClaim);
-
-//     var user =
-//         await _profileService.GetProfileAsync(userId);
-
-//     if(user == null)
-//         return NotFound();
-
-//     return Ok(new
-//     {
-//         user.UserId,
-//         user.FirstName,
-//         user.LastName,
-//         user.Email
-//     });
-// }
-
         [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> Me()
