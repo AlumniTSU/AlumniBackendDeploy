@@ -22,5 +22,21 @@ namespace backend.Mappers
                 PhoneNumber = studentModel.PhoneNumber
             };
         }
+
+        public static AlumniDetailsDto ToAlumniDetailsDto(this Student student)
+        {
+            return new AlumniDetailsDto
+            {
+                StudentId = student.StudentId,
+                FirstName = student.StudentFirstName,
+                LastName = student.StudentLastName,
+                Email = student.Email,
+                PhoneNumber = student.PhoneNumber,
+                Bio = null,
+                ContactEmail = student.Email,
+                ContactPhoneNumber = student.PhoneNumber
+            };
+        }
+        
     }
 }

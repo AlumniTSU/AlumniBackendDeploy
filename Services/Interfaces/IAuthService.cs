@@ -12,6 +12,8 @@ namespace backend.Services.Interfaces
         Task<string?> LoginAsync(LoginUserDto dto);
 
         Task RegisterAsync(RegisterUserDto dto);
+
+        
         
     }
 }

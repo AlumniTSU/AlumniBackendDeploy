@@ -23,16 +23,26 @@ namespace backend.Services
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IStudentRepository _studentRepo;
         private readonly IConfiguration _configuration;
 
-        public AuthService(IUserRepository userRepository, IConfiguration configuration)
+        public AuthService(IUserRepository userRepository, IStudentRepository studentRepo, IConfiguration configuration)
         {
             _userRepository = userRepository;
+            _studentRepo = studentRepo;
             _configuration = configuration;
         }
 
         public async Task RegisterAsync(RegisterUserDto userDto)
         {
+            var student = await _studentRepo.GetByPersonalIdAsync(userDto.PersonalId);
+
+            if(student == null)
+            {
+                throw new Exception("The user is not in TSU");
+            }
+            
+            
             var existingUser = await _userRepository.GetByEmailAsync(userDto.Email);
 
             if(existingUser != null)
@@ -118,5 +128,6 @@ namespace backend.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
     }
 }
