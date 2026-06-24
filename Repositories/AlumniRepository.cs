@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using backend.Dtos.Alumni;
+using backend.Dtos.Student;
 using backend.Entities;
 using backend.Repositories.Interfaces;
+using backend.Mappers;
 
 namespace backend.Repositories
 {
@@ -20,13 +21,15 @@ namespace backend.Repositories
 
         public async Task<List<AlumniDto>> GetAllAsync()
         {
-            return await _context.Students.Where(s => s.HasUniversityFinished).Select(s => new AlumniDto
-            {
-                StudentId = s.StudentId,
-                StudentFirstname = s.StudentFirstName,
-                Email = s.Email,
-                PhoneNumber = s.PhoneNumber
-            }).ToListAsync();
+            // return await _context.Students.Where(s => s.HasUniversityFinished).Select(s => new AlumniDto
+            // {
+            //     StudentId = s.StudentId,
+            //     StudentFirstname = s.StudentFirstName,
+            //     Email = s.Email,
+            //     PhoneNumber = s.PhoneNumber
+            // }).ToListAsync();
+
+            return await _context.Students.Where(s => s.HasUniversityFinished).Select(s => s.ToAlumniDto()).ToListAsync();
         }
 
         public async Task<AlumniDto?> GetByIdAsync(int id)
@@ -38,16 +41,7 @@ namespace backend.Repositories
                 return null;
             }
 
-            
-
-            return new AlumniDto
-            {
-                StudentId = student.StudentId,
-                StudentFirstname = student.StudentFirstName,
-                StudentLastName = student.StudentLastName,
-                Email = student.Email,
-                PhoneNumber = student.PhoneNumber
-            };
+            return student.ToAlumniDto();
         }
     }
 }

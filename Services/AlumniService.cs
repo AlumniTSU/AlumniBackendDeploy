@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using backend.Dtos.Alumni;
+using backend.Dtos.Student;
 using backend.Repositories.Interfaces;
 using backend.Services.Interfaces;
 
