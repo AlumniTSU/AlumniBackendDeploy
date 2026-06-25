@@ -45,26 +45,26 @@ namespace backend.Controllers
             return Ok(profile);
         }
 
-        [Authorize]
-        [HttpGet("claims")]
-        public IActionResult ClaimsTest()
-        {
-            return Ok(
-                User.Claims.Select(c => new
-                {
-                    c.Type,
-                    c.Value
-                })
-            );
-        }
+        // [Authorize]
+        // [HttpGet("claims")]
+        // public IActionResult ClaimsTest()
+        // {
+        //     return Ok(
+        //         User.Claims.Select(c => new
+        //         {
+        //             c.Type,
+        //             c.Value
+        //         })
+        //     );
+        // }
 
-        [HttpGet("headers")]
-        public IActionResult Headers()
-        {
-            return Ok(
-                Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString())
-            );
-        }
+        // [HttpGet("headers")]
+        // public IActionResult Headers()
+        // {
+        //     return Ok(
+        //         Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString())
+        //     );
+        // }
 
         [Authorize]
         [HttpPut("me")]
