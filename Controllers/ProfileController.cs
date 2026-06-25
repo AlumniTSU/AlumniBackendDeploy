@@ -35,20 +35,14 @@ namespace backend.Controllers
 
             int userId = int.Parse(userIdClaim);
 
-            var user = await _profileService.GetProfileAsync(userId);
+            var profile = await _profileService.GetProfileAsync(userId);
 
-            if(user == null)
+            if(profile == null)
             {
                 return NotFound();
             }
 
-            return Ok(new
-            {
-                user.UserId,
-                user.FirstName,
-                user.LastName,
-                user.Email
-            });
+            return Ok(profile);
         }
 
         [Authorize]
@@ -87,12 +81,12 @@ namespace backend.Controllers
 
             var success = await _profileService.UpdateProfileAsync(userId, dto);
 
-            if (!success)
+            if (success == null)
             {
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(success);
         }
 
         [Authorize]

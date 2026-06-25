@@ -24,12 +24,14 @@ namespace backend.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IStudentRepository _studentRepo;
+        private readonly IAlumniProfileRepository _profileRepository;
         private readonly IConfiguration _configuration;
 
-        public AuthService(IUserRepository userRepository, IStudentRepository studentRepo, IConfiguration configuration)
+        public AuthService(IUserRepository userRepository, IStudentRepository studentRepo, IAlumniProfileRepository profileRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _studentRepo = studentRepo;
+            _profileRepository = profileRepository;
             _configuration = configuration;
         }
 
@@ -58,10 +60,20 @@ namespace backend.Services
             }
             
             var userModel = userDto.FromRegisterToUser();
+            userModel.StudentId =  (int)student.StudentId;
 
             //var sw = Stopwatch.StartNew();
             await _userRepository.AddAsync(userModel);
             //Console.WriteLine($"register: {sw.ElapsedMilliseconds} ms");
+
+            var profile = new AlumniProfile
+            {
+                UserId = userModel.UserId,
+                ProfileGuid = Guid.NewGuid(),
+                RecordDate = DateTime.UtcNow
+            };
+
+            await _profileRepository.AddAsync(profile);
         }
 
         public async Task<string?> LoginAsync(LoginUserDto userDto)
@@ -101,12 +113,12 @@ namespace backend.Services
 
                 new Claim(
                     ClaimTypes.Name,
-                    user.FirstName
+                    user.FirstName!
                 ),
 
                 new Claim(
                     ClaimTypes.Surname,
-                    user.LastName
+                    user.LastName!
                 ),
 
                 new Claim(

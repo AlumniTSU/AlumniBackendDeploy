@@ -10,6 +10,8 @@ namespace backend.Repositories.Interfaces
     {
 
         Task<Student?> GetByPersonalIdAsync(string personalId);
+        Task<Student?> GetByIdAsync(int studentId);
+        // Task<Student?> GetByUserIdAsync(int userId);
 
     }
 }

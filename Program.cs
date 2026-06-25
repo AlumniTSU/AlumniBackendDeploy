@@ -74,6 +74,7 @@ builder.Services.AddDbContext<AlumniDBContext>(options => options.UseSqlServer(
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAlumniRepository, AlumniRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IAlumniProfileRepository, AlumniProfileRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
