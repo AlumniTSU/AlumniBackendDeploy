@@ -22,20 +22,13 @@ public partial class Partner
     public string? NameEng { get; set; }
 
     [StringLength(50)]
-    [Unicode(false)]
-    public string? Code9 { get; set; }
+    public string? IdentificationCode { get; set; }
 
     public string? DescriptionGeo { get; set; }
 
     public string? DescriptionEng { get; set; }
 
     public string? Website { get; set; }
-
-    [StringLength(200)]
-    public string? ContactEmail { get; set; }
-
-    [StringLength(200)]
-    public string? ContactPhone { get; set; }
 
     [Column("UserID")]
     public int UserId { get; set; }

@@ -15,6 +15,9 @@ public partial class File
     [Column("ContentGUID")]
     public Guid ContentGuid { get; set; }
 
+    [Column("EntityTypeID")]
+    public int? EntityTypeId { get; set; }
+
     [StringLength(200)]
     public string FileName { get; set; } = null!;
 
@@ -28,4 +31,6 @@ public partial class File
 
     [Column(TypeName = "datetime")]
     public DateTime? UploadDate { get; set; }
+
+    public bool IsMainPic { get; set; }
 }

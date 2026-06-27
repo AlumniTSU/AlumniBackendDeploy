@@ -29,6 +29,8 @@ public partial class AlumniDBContext : DbContext
 
     public virtual DbSet<EducationLevel> EducationLevels { get; set; }
 
+    public virtual DbSet<Entity> Entities { get; set; }
+
     public virtual DbSet<EstablishmentType> EstablishmentTypes { get; set; }
 
     public virtual DbSet<Event> Events { get; set; }
@@ -150,6 +152,11 @@ public partial class AlumniDBContext : DbContext
         modelBuilder.Entity<EducationLevel>(entity =>
         {
             entity.HasKey(e => e.LevelId).HasName("PK__Educatio__42A46B8449C0C7E3");
+        });
+
+        modelBuilder.Entity<Entity>(entity =>
+        {
+            entity.HasKey(e => e.EntityId).HasName("PK__Entities__9C892FFDC814BBE9");
         });
 
         modelBuilder.Entity<EstablishmentType>(entity =>

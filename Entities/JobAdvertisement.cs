@@ -39,8 +39,6 @@ public partial class JobAdvertisement
     [Column(TypeName = "datetime")]
     public DateTime EndDate { get; set; }
 
-    public bool IsActive { get; set; }
-
     [StringLength(50)]
     public string? Salary { get; set; }
 
