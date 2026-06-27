@@ -8,6 +8,7 @@ using backend.Dtos.Event;
 using backend.Entities;
 using backend.Repositories.Interfaces;
 using backend.Mappers;
+using backend.Results;
 
 
 namespace backend.Repositories
@@ -21,11 +22,10 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<EventDto>> GetEventsAsync()
+        public async Task<IEnumerable<GetEventsResult>> GetEventsAsync()
         {
-            var events = await _context.Events.FromSqlRaw("EXEC GetEvents").AsNoTracking().ToListAsync();
-
-            return events.Select(s => s.ToEventDto());
+            return await _context.GetEvents().ToListAsync();
+            // return events.Select(s => s.ToEventDto());
         }
     }
 }

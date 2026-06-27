@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 using backend.Entities;
 using backend.Dtos.Event;
+using backend.Results;
 
 
 namespace backend.Repositories.Interfaces
 {
     public interface IEventRepository
     {
-        Task<IEnumerable<Event>> GetEventsAsync();
+        Task<IEnumerable<GetEventsResult>> GetEventsAsync();
         // Task<Event?> GetByIdAsync(int id);
         // Task<Event> AddAsync(Event entity);
         // Task UpdateAsync(Event entity);
