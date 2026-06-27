@@ -13,7 +13,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/events")]
-    public class EventController
+    public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
         public EventController(IEventService eventService)
@@ -24,7 +24,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var events = _eventService.GetAllAsync();
+            var events = await _eventService.GetAllAsync();
 
             return Ok(events);
         }
