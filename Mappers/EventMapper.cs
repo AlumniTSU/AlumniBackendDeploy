@@ -20,5 +20,16 @@ namespace backend.Mappers
                 EventDate = eventModel.EventDate
             };
         }
+
+        public static EventDto ToEventDto(this Event eventModel)
+        {
+            return new EventDto
+            {
+                EventId = eventModel.EventId,
+                Title = eventModel.TitleGeo!,
+                Description = eventModel.DescriptionGeo!,
+                EventDate = eventModel.EventDate
+            };
+        }
     }
 }

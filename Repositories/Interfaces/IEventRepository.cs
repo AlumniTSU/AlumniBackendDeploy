@@ -13,7 +13,7 @@ namespace backend.Repositories.Interfaces
     public interface IEventRepository
     {
         Task<IEnumerable<GetEventsResult>> GetEventsAsync();
-        // Task<Event?> GetByIdAsync(int id);
+        Task<Event?> GetByIdAsync(int id);
         // Task<Event> AddAsync(Event entity);
         // Task UpdateAsync(Event entity);
         // Task DeleteAsync(Event entity);

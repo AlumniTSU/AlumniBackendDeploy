@@ -22,5 +22,17 @@ namespace backend.Services.Interfaces
 
             return events.Select(s => s.ToEventDto());
         }
+
+        public async Task<EventDto?> GetByIdAsync(int eventId)
+        {
+            var eventModel = await _eventRepo.GetByIdAsync(eventId);
+
+            if(eventModel == null)
+            {
+                return null;
+            }
+
+            return eventModel.ToEventDto();
+        }
     }
 }

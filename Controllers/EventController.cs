@@ -28,5 +28,20 @@ namespace backend.Controllers
 
             return Ok(events);
         }
+
+
+        [HttpGet]
+        [Route("{eventId:int}")]
+        public async Task<IActionResult> GetById([FromRoute] int eventId)
+        {
+            var result = await _eventService.GetByIdAsync(eventId);
+
+            if(result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
     }
 }
