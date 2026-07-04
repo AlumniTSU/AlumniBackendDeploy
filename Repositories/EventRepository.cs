@@ -32,5 +32,12 @@ namespace backend.Repositories
         {
             return await _context.Events.FirstOrDefaultAsync(s => s.EventId == eventId);
         }
+
+        public async Task<AddEventResult> AddAsync(CreateEventDto dto, int createdBy)
+        {
+            return await _context.AddEventAsync(dto, createdBy);
+        }
+
+        
     }
 }

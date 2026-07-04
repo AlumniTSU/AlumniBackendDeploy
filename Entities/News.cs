@@ -15,9 +15,6 @@ public partial class News
     [Column("NewsGUID")]
     public Guid NewsGuid { get; set; }
 
-    [Column("CategoryID")]
-    public int CategoryId { get; set; }
-
     [StringLength(200)]
     public string TitleGeo { get; set; } = null!;
 
@@ -27,12 +24,6 @@ public partial class News
     public string BodyGeo { get; set; } = null!;
 
     public string? BodyEng { get; set; }
-
-    [StringLength(250)]
-    public string SlugGeo { get; set; } = null!;
-
-    [StringLength(250)]
-    public string? SlugEng { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime NewsDate { get; set; }

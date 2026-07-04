@@ -34,5 +34,23 @@ namespace backend.Services.Interfaces
 
             return eventModel.ToEventDto();
         }
+
+        public async Task<EventDto> CreateAsync(CreateEventDto dto, int createdBy)
+        {
+            var result = await _eventRepo.AddAsync(dto, createdBy);
+
+            if(!result.IsAdded)
+                throw new InvalidOperationException(result.Error ?? "Failed to add event.");
+            
+            return new EventDto
+            {
+                EventId = result.EventId!.Value,
+                Title = dto.TitleGeo,
+                Description = dto.DescriptionGeo,
+                EventDate = dto.EventDate,
+            };
+        }
+
+        
     }
 }

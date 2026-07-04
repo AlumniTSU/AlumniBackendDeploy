@@ -27,7 +27,7 @@ public partial class UserEducation
 
     public int EducationLevel { get; set; }
 
-    [StringLength(100)]
+    [StringLength(1000)]
     public string? StudyField { get; set; }
 
     [Column(TypeName = "datetime")]
