@@ -10,7 +10,7 @@ namespace backend.Services.Interfaces
     {
         Task<IEnumerable<EventDto>> GetAllAsync();
         Task<EventDto?> GetByIdAsync(int eventId);
-        Task<EventDto> CreateAsync(CreateEventDto dto, int createdBy);
+        Task<EventDto> CreateAsync(CreateEventWithPhotoDto dto, int createdBy);
         // Task UpdateAsync(int id, UpdateEventDto dto);
         // Task DeleteAsync(int id);
     }

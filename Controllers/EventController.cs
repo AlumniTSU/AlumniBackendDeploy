@@ -47,7 +47,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateEventDto dto)
+        public async Task<IActionResult> Create([FromForm] CreateEventWithPhotoDto dto)
         {
             // int createdBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
             int createdBy = 1;
