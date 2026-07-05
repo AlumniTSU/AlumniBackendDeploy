@@ -6,6 +6,7 @@ using backend.Dtos.Event;
 using backend.Dtos.File;
 using backend.Mappers;
 using backend.Repositories.Interfaces;
+using backend.Results;
 using backend.Services.Interfaces;
 
 namespace backend.Services
@@ -93,6 +94,25 @@ namespace backend.Services
             //     Description = dto.Description,
             //     EventDate = dto.EventDate,
             // };
+        }
+
+        public async Task UpdateAsync(int eventId, UpdateEventDto dto, int updatedBy)
+        {
+            var result = await _eventRepo.UpdateAsync(eventId, dto, updatedBy);
+
+            if (!result.IsEdited)
+                throw new InvalidOperationException(result.Error);
+        }
+        
+        
+        
+
+        public async Task DeleteAsync(int eventId, int updatedBy)
+        {
+            var result = await _eventRepo.DeleteAsync(eventId, updatedBy);
+
+            if (!result.IsDeleted)
+                throw new InvalidOperationException(result.Error);
         }
 
         

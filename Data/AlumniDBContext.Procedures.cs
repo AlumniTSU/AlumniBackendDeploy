@@ -75,4 +75,82 @@ public partial class AlumniDBContext
             Error = pError.Value as string,
         };
     }
+
+
+    public async Task<DeleteEventResult> DeleteEventAsync(int eventId, int updatedBy)
+    {
+        var pIsDeleted = new SqlParameter("@IsDeleted", SqlDbType.Bit)
+        {
+            Direction = ParameterDirection.Output
+        };
+
+        var pError = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+        {
+            Direction = ParameterDirection.Output
+        };
+
+        await Database.ExecuteSqlRawAsync(
+            "EXEC dbo.DeleteEvent @EventID, @UpdatedBy, @IsDeleted OUTPUT, @Error OUTPUT",
+            new SqlParameter("@EventID", eventId),
+            new SqlParameter("@UpdatedBy", updatedBy),
+            pIsDeleted,
+            pError
+        );
+
+        return new DeleteEventResult
+        {
+            IsDeleted = (bool)pIsDeleted.Value,
+            Error = pError.Value as string
+        };
+    }
+
+
+
+    public async Task<UpdateEventResult> UpdateEventAsync(
+    int eventId,
+    UpdateEventDto dto,
+    int updatedBy)
+{
+    var pIsEdited = new SqlParameter("@IsEdited", SqlDbType.Bit)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var pError = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    await Database.ExecuteSqlRawAsync(
+        @"EXEC dbo.EditEvent
+            @EventID,
+            @TitleGeo,
+            @TitleEng,
+            @DescriptionGeo,
+            @DescriptionEng,
+            @EventDate,
+            @PartnerId,
+            @UpdatedBy,
+            @IsEdited OUTPUT,
+            @Error OUTPUT",
+
+        new SqlParameter("@EventID", eventId),
+        new SqlParameter("@TitleGeo", (object?)dto.TitleGeo ?? DBNull.Value),
+        new SqlParameter("@TitleEng", (object?)dto.TitleEng ?? DBNull.Value),
+        new SqlParameter("@DescriptionGeo", (object?)dto.DescriptionGeo ?? DBNull.Value),
+        new SqlParameter("@DescriptionEng", (object?)dto.DescriptionEng ?? DBNull.Value),
+        new SqlParameter("@EventDate", (object?)dto.EventDate ?? DBNull.Value),
+        new SqlParameter("@PartnerId", (object?)dto.PartnerId ?? DBNull.Value),
+        new SqlParameter("@UpdatedBy", updatedBy),
+
+        pIsEdited,
+        pError
+    );
+
+    return new UpdateEventResult
+    {
+        IsEdited = (bool)pIsEdited.Value,
+        Error = pError.Value as string
+    };
+}
 }

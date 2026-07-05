@@ -57,5 +57,32 @@ namespace backend.Controllers
             var created = await _eventService.CreateAsync(dto, createdBy);
             return CreatedAtAction(nameof(GetById), new {id = created.EventId, languageId = 1}, created);
         }
+
+
+        [HttpPut("{eventId:int}")]
+        public async Task<IActionResult> Update(int eventId, [FromBody] UpdateEventDto dto, [FromQuery] int languageId = 1)
+        {
+            int updatedBy = 1; // later from JWT
+
+            await _eventService.UpdateAsync(eventId, dto, updatedBy);
+
+            var updatedEvent = await _eventService.GetByIdAsync(languageId, eventId);
+            
+
+            return Ok(updatedEvent);
+        }
+
+        
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete([FromRoute]int id)
+        {
+            // later this comes from JWT
+            int updatedBy = 1;
+
+            await _eventService.DeleteAsync(id, updatedBy);
+
+            return NoContent();
+        }
     }
 }

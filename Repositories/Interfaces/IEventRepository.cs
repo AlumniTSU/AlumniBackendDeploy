@@ -15,7 +15,7 @@ namespace backend.Repositories.Interfaces
         Task<IEnumerable<GetEventsResult>> GetEventsAsync();
         Task<GetEventsResult?> GetByIdAsync(int languageId, int eventId);
         Task<AddEventResult> AddAsync(CreateEventDto dto, int createdBy);
-        // Task UpdateAsync(Event entity);
-        // Task DeleteAsync(Event entity);
+        Task<UpdateEventResult> UpdateAsync(int eventId, UpdateEventDto dto, int updatedBy);
+        Task<DeleteEventResult> DeleteAsync(int eventId, int updatedBy);
     }
 }

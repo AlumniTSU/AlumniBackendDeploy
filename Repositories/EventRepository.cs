@@ -39,6 +39,17 @@ namespace backend.Repositories
             return await _context.AddEventAsync(dto, createdBy);
         }
 
+
+        public async Task<UpdateEventResult> UpdateAsync(int eventId, UpdateEventDto dto, int updatedBy)
+        {
+            return await _context.UpdateEventAsync(eventId, dto, updatedBy);
+        }
         
+        
+
+        public async Task<DeleteEventResult> DeleteAsync(int eventId, int updatedBy)
+        {
+            return await _context.DeleteEventAsync(eventId, updatedBy);
+        }
     }
 }
