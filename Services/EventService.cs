@@ -6,8 +6,9 @@ using backend.Dtos.Event;
 using backend.Dtos.File;
 using backend.Mappers;
 using backend.Repositories.Interfaces;
+using backend.Services.Interfaces;
 
-namespace backend.Services.Interfaces
+namespace backend.Services
 {
     public class EventService : IEventService
     {
@@ -26,9 +27,9 @@ namespace backend.Services.Interfaces
             return events.Select(s => s.ToEventDto());
         }
 
-        public async Task<EventDto?> GetByIdAsync(int eventId)
+        public async Task<EventDto?> GetByIdAsync(int languageId, int eventId)
         {
-            var eventModel = await _eventRepo.GetByIdAsync(eventId);
+            var eventModel = await _eventRepo.GetByIdAsync(languageId, eventId);
 
             if(eventModel == null)
             {
@@ -40,6 +41,7 @@ namespace backend.Services.Interfaces
 
         public async Task<EventDto> CreateAsync(CreateEventWithPhotoDto dto, int createdBy)
         {
+            // Console.WriteLine($"[DEBUG] Photo null? {dto.Photo is null}, length: {dto.Photo?.Length ?? -1}");
             var createDto = new CreateEventDto
             {
                 TitleGeo = dto.TitleGeo,
@@ -79,28 +81,16 @@ namespace backend.Services.Interfaces
                     throw new InvalidOperationException(fileResult.Error ?? "Failed to add file");
             }
 
-            return new EventDto
-            {
-                EventId = eventResult.EventId!.Value,
-                Title = dto.TitleGeo,
-                Description = dto.DescriptionGeo,
-                EventDate = dto.EventDate,
-            };
-            
-            
-            
-            
-            
-            // var result = await _eventRepo.AddAsync(dto, createdBy);
+            var createdEvent = await _eventRepo.GetByIdAsync(1, eventResult.EventId!.Value);
 
-            // if(!result.IsAdded)
-            //     throw new InvalidOperationException(result.Error ?? "Failed to add event.");
+            return createdEvent!.ToEventDto();
             
+
             // return new EventDto
             // {
-            //     EventId = result.EventId!.Value,
-            //     Title = dto.TitleGeo,
-            //     Description = dto.DescriptionGeo,
+            //     EventId = eventResult.EventId!.Value,
+            //     Title = dto.Title,
+            //     Description = dto.Description,
             //     EventDate = dto.EventDate,
             // };
         }

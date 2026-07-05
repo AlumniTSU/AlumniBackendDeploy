@@ -2,23 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+
 using Microsoft.EntityFrameworkCore;
+
 
 namespace backend.Results
 {
     [Keyless]
     public class GetEventsResult
     {
-        public int EventID {get; set;}
+        [Column("EventID")]
+        public int EventId {get; set;}
         public Guid EventUid { get; set; }
-        public string? TitleGeo {get; set;}
-        public string? TitleEng {get; set;}
-        public string? DescriptionGeo {get; set;}
-        public string? DescriptionEng {get; set;}
-        public DateTime EventDate {get; set;}
+        public string? Title {get; set;}
+        public string? Description {get; set;}
+        public DateTime? EventDate {get; set;}
         public int CreatedBy {get; set;}
         public byte[]? File {get; set;}
         public bool? IsMainPic {get; set;}
+        [Column("FileTypeID")]
         public int? FileTypeID {get; set;}
         public string? Extension {get; set;}
         public int? PartnerId {get; set;}

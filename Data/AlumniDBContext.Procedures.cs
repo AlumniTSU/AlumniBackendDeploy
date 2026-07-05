@@ -11,6 +11,14 @@ public partial class AlumniDBContext
 {
     public IQueryable<GetEventsResult> GetEvents() => Database.SqlQuery<GetEventsResult>($"EXEC dbo.GetEvents");
 
+    public async Task<GetEventsResult?> GetEventByLanguageIdAndEventIdAsync(int languageId, int eventId)
+    {
+        var result = await Database.SqlQuery<GetEventsResult>($"EXEC GetEventsByLanguageIDAndEVentID @LanguageID={languageId}, @EventID={eventId}").ToListAsync();
+
+        return result.SingleOrDefault();
+    }
+    
+    
     public async Task<AddEventResult> AddEventAsync(CreateEventDto dto, int createdBy)
     {
         var pEventId = new SqlParameter("@EventID", SqlDbType.Int) {Direction = ParameterDirection.Output};

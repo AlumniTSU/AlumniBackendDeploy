@@ -14,10 +14,12 @@ namespace backend.Mappers
         {
             return new EventDto
             {
-                EventId = eventModel.EventID,
-                Title = eventModel.TitleGeo!,
-                Description = eventModel.DescriptionGeo!,
-                EventDate = eventModel.EventDate
+                EventId = eventModel.EventId,
+                Title = eventModel.Title!,
+                Description = eventModel.Description!,
+                EventDate = eventModel.EventDate,
+                File = eventModel.File,
+                Extension = eventModel.Extension
             };
         }
 

@@ -28,9 +28,10 @@ namespace backend.Repositories
             // return events.Select(s => s.ToEventDto());
         }
 
-        public async Task<Event?> GetByIdAsync(int eventId)
+        public async Task<GetEventsResult?> GetByIdAsync(int languageId, int eventId)
         {
-            return await _context.Events.FirstOrDefaultAsync(s => s.EventId == eventId);
+            // return await _context.Events.FirstOrDefaultAsync(s => s.EventId == eventId);
+            return await _context.GetEventByLanguageIdAndEventIdAsync(languageId, eventId);
         }
 
         public async Task<AddEventResult> AddAsync(CreateEventDto dto, int createdBy)

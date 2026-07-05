@@ -33,10 +33,10 @@ namespace backend.Controllers
 
 
         [HttpGet]
-        [Route("{eventId:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int eventId)
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetById([FromRoute] int eventId, [FromQuery] int languageId = 1)
         {
-            var result = await _eventService.GetByIdAsync(eventId);
+            var result = await _eventService.GetByIdAsync(languageId, eventId);
 
             if(result == null)
             {
@@ -55,7 +55,7 @@ namespace backend.Controllers
             
 
             var created = await _eventService.CreateAsync(dto, createdBy);
-            return CreatedAtAction(nameof(GetById), new {eventId = created.EventId}, created);
+            return CreatedAtAction(nameof(GetById), new {id = created.EventId, languageId = 1}, created);
         }
     }
 }

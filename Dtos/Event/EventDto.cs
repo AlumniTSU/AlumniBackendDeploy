@@ -7,9 +7,20 @@ namespace backend.Dtos.Event
 {
     public class EventDto
     {
+        // public int EventId {get; set;}
+        // public string TitleGeo {get; set;} = string.Empty;
+        // public string TitleEng {get; set;} = string.Empty;
+        // public string DescriptionGeo {get; set;} = string.Empty;
+        // public string DescriptionEng {get; set;} = string.Empty;
+        // public DateTime? EventDate {get; set;} 
+        // public byte[]? File {get; set;}
+        // public string? Extension {get; set;}
+        
         public int EventId {get; set;}
         public string Title {get; set;} = string.Empty;
         public string Description {get; set;} = string.Empty;
-        public DateTime? EventDate {get; set;} 
+        public DateTime? EventDate {get; set;}
+        public byte[]? File {get; set;}
+        public string? Extension {get; set;}
     }
 }
