@@ -13,7 +13,7 @@ namespace backend.Entities;
 public partial class AlumniDBContext
 {
     #region Events
-    public IQueryable<GetEventsResult> GetEvents() => Database.SqlQuery<GetEventsResult>($"EXEC dbo.GetEvents");
+    public IQueryable<GetEventsResult> GetEvents(int languageId) => Database.SqlQuery<GetEventsResult>($"EXEC dbo.GetEventsByLanguageID @LanguageID={languageId}");
 
     public async Task<GetEventsResult?> GetEventByLanguageIdAndEventIdAsync(int languageId, int eventId)
     {

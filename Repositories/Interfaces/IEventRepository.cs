@@ -12,7 +12,7 @@ namespace backend.Repositories.Interfaces
 {
     public interface IEventRepository
     {
-        Task<IEnumerable<GetEventsResult>> GetEventsAsync();
+        Task<IEnumerable<GetEventsResult>> GetEventsAsync(int languageId);
         Task<GetEventsResult?> GetByIdAsync(int languageId, int eventId);
         Task<AddEventResult> AddAsync(CreateEventDto dto, int createdBy);
         Task<UpdateEventResult> UpdateAsync(int eventId, UpdateEventDto dto, int updatedBy);

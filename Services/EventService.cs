@@ -21,9 +21,9 @@ namespace backend.Services
             _fileRepo = fileRepo;
         }
 
-        public async Task<IEnumerable<EventDto>> GetAllAsync()
+        public async Task<IEnumerable<EventDto>> GetAllAsync(int languageId)
         {
-            var events = await _eventRepo.GetEventsAsync();
+            var events = await _eventRepo.GetEventsAsync(languageId);
 
             return events.Select(s => s.ToEventDto());
         }

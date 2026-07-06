@@ -9,7 +9,7 @@ namespace backend.Services.Interfaces
 {
     public interface IEventService
     {
-        Task<IEnumerable<EventDto>> GetAllAsync();
+        Task<IEnumerable<EventDto>> GetAllAsync(int languageId);
         Task<EventDto?> GetByIdAsync(int languageId, int eventId);
         Task<EventDto> CreateAsync(CreateEventWithPhotoDto dto, int createdBy);
         Task UpdateAsync(int eventId, UpdateEventDto dto,int updatedBy);

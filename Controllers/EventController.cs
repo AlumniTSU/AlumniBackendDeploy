@@ -24,9 +24,9 @@ namespace backend.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery]int languageId = 1)
         {
-            var events = await _eventService.GetAllAsync();
+            var events = await _eventService.GetAllAsync(languageId);
 
             return Ok(events);
         }
@@ -34,9 +34,9 @@ namespace backend.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int eventId, [FromQuery] int languageId = 1)
+        public async Task<IActionResult> GetById([FromRoute] int id, [FromQuery] int languageId = 1)
         {
-            var result = await _eventService.GetByIdAsync(languageId, eventId);
+            var result = await _eventService.GetByIdAsync(languageId, id);
 
             if(result == null)
             {

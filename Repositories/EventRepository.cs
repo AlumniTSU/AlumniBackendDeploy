@@ -22,9 +22,9 @@ namespace backend.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<GetEventsResult>> GetEventsAsync()
+        public async Task<IEnumerable<GetEventsResult>> GetEventsAsync(int languageId)
         {
-            return await _context.GetEvents().ToListAsync();
+            return await _context.GetEvents(languageId).ToListAsync();
             // return events.Select(s => s.ToEventDto());
         }
 
