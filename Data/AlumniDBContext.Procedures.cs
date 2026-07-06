@@ -3,12 +3,16 @@ using backend.Results;
 using backend.Dtos.Event;
 using System.Data;
 using Microsoft.Data.SqlClient;
+
 using backend.Dtos.File;
+using backend.Dtos.News;
+using backend.Results.News;
 
 namespace backend.Entities;
 
 public partial class AlumniDBContext
 {
+    #region Events
     public IQueryable<GetEventsResult> GetEvents() => Database.SqlQuery<GetEventsResult>($"EXEC dbo.GetEvents");
 
     public async Task<GetEventsResult?> GetEventByLanguageIdAndEventIdAsync(int languageId, int eventId)
@@ -106,51 +110,117 @@ public partial class AlumniDBContext
 
 
 
-    public async Task<UpdateEventResult> UpdateEventAsync(
-    int eventId,
-    UpdateEventDto dto,
-    int updatedBy)
+    public async Task<UpdateEventResult> UpdateEventAsync(int eventId, UpdateEventDto dto, int updatedBy)
+    {
+        var pIsEdited = new SqlParameter("@IsEdited", SqlDbType.Bit)
+        {
+            Direction = ParameterDirection.Output
+        };
+
+        var pError = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+        {
+            Direction = ParameterDirection.Output
+        };
+
+        await Database.ExecuteSqlRawAsync(
+            @"EXEC dbo.EditEvent
+                @EventID,
+                @TitleGeo,
+                @TitleEng,
+                @DescriptionGeo,
+                @DescriptionEng,
+                @EventDate,
+                @PartnerId,
+                @UpdatedBy,
+                @IsEdited OUTPUT,
+                @Error OUTPUT",
+
+            new SqlParameter("@EventID", eventId),
+            new SqlParameter("@TitleGeo", (object?)dto.TitleGeo ?? DBNull.Value),
+            new SqlParameter("@TitleEng", (object?)dto.TitleEng ?? DBNull.Value),
+            new SqlParameter("@DescriptionGeo", (object?)dto.DescriptionGeo ?? DBNull.Value),
+            new SqlParameter("@DescriptionEng", (object?)dto.DescriptionEng ?? DBNull.Value),
+            new SqlParameter("@EventDate", (object?)dto.EventDate ?? DBNull.Value),
+            new SqlParameter("@PartnerId", (object?)dto.PartnerId ?? DBNull.Value),
+            new SqlParameter("@UpdatedBy", updatedBy),
+
+            pIsEdited,
+            pError
+        );
+
+        return new UpdateEventResult
+        {
+            IsEdited = (bool)pIsEdited.Value,
+            Error = pError.Value as string
+        };
+    }
+    #endregion
+
+
+    #region News
+    public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto)
 {
-    var pIsEdited = new SqlParameter("@IsEdited", SqlDbType.Bit)
+    var newsId = new SqlParameter("@NewsID", SqlDbType.Int)
     {
         Direction = ParameterDirection.Output
     };
 
-    var pError = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+    var newsGuid = new SqlParameter("@NewsGUID", SqlDbType.UniqueIdentifier)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var isAdded = new SqlParameter("@IsAdded", SqlDbType.Bit)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var error = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
     {
         Direction = ParameterDirection.Output
     };
 
     await Database.ExecuteSqlRawAsync(
-        @"EXEC dbo.EditEvent
-            @EventID,
+        @"EXEC dbo.AddNews
+            @CategoryID,
             @TitleGeo,
             @TitleEng,
-            @DescriptionGeo,
-            @DescriptionEng,
-            @EventDate,
-            @PartnerId,
-            @UpdatedBy,
-            @IsEdited OUTPUT,
+            @BodyGeo,
+            @BodyEng,
+            @SlugGeo,
+            @SlugEng,
+            @UserID,
+            @NewsDate,
+            @NewsID OUTPUT,
+            @NewsGUID OUTPUT,
+            @IsAdded OUTPUT,
             @Error OUTPUT",
 
-        new SqlParameter("@EventID", eventId),
-        new SqlParameter("@TitleGeo", (object?)dto.TitleGeo ?? DBNull.Value),
-        new SqlParameter("@TitleEng", (object?)dto.TitleEng ?? DBNull.Value),
-        new SqlParameter("@DescriptionGeo", (object?)dto.DescriptionGeo ?? DBNull.Value),
-        new SqlParameter("@DescriptionEng", (object?)dto.DescriptionEng ?? DBNull.Value),
-        new SqlParameter("@EventDate", (object?)dto.EventDate ?? DBNull.Value),
-        new SqlParameter("@PartnerId", (object?)dto.PartnerId ?? DBNull.Value),
-        new SqlParameter("@UpdatedBy", updatedBy),
+        new SqlParameter("@CategoryID", newsDto.CategoryId),
+        new SqlParameter("@TitleGeo", newsDto.TitleGeo),
+        new SqlParameter("@TitleEng", newsDto.TitleEng),
+        new SqlParameter("@BodyGeo", newsDto.BodyGeo),
+        new SqlParameter("@BodyEng", newsDto.BodyEng),
+        new SqlParameter("@SlugGeo", newsDto.SlugGeo),
+        new SqlParameter("@SlugEng", newsDto.SlugEng),
+        new SqlParameter("@UserID", newsDto.UserId),
+        new SqlParameter("@NewsDate", newsDto.NewsDate),
 
-        pIsEdited,
-        pError
+        newsId,
+        newsGuid,
+        isAdded,
+        error
     );
 
-    return new UpdateEventResult
+    return new AddNewsResult
     {
-        IsEdited = (bool)pIsEdited.Value,
-        Error = pError.Value as string
+        NewsId = newsId.Value == DBNull.Value ? null : (int?)newsId.Value,
+        NewsGuid = newsGuid.Value == DBNull.Value ? null : (Guid?)newsGuid.Value,
+        IsAdded = isAdded.Value != DBNull.Value && (bool)isAdded.Value,
+        Error = error.Value == DBNull.Value ? null : error.Value.ToString()
     };
 }
+
+
+    #endregion
 }

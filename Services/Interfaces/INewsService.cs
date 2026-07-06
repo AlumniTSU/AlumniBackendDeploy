@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using backend.Dtos.News;
 using backend.Results.News;
 
-namespace backend.Repositories.Interfaces
+namespace backend.Services.Interfaces
 {
-    public interface INewsRepository
+    public interface INewsService
     {
         Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto);
     }
