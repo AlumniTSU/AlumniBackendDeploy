@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Dtos.File;
 using backend.Dtos.News;
 using backend.Repositories.Interfaces;
 using backend.Results.News;
@@ -17,9 +18,9 @@ namespace backend.Services
             _newsRepo = newsRepo;
         }
 
-        public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto)
+        public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto dto)
         {
-            return await _newsRepo.AddNewsAsync(newsDto);
+            return await _newsRepo.AddNewsAsync(dto);
             // var createDto = new CreateNewsDto
             // {
             //     TitleGeo = dto.TitleGeo,
@@ -40,9 +41,24 @@ namespace backend.Services
             //     byte[] bytes;
             //     using (var ms = new MemoryStream())
             //     {
-                    
+            //         await dto.Photo.CopyToAsync(ms);
+            //         bytes = ms.ToArray();
             //     }
-            // }
+
+            //     var fileDto = new AddFileDto
+            //     {
+            //         ContentGuid = newsResult.NewsGuid.Value,
+            //         EntityTypeId = 1,
+            //         FileName = $"{Guid.NewGuid()}_{dto.Photo.FileName}",
+            //         File = bytes,
+            //         FileTypeId = 1,
+            //         IsMainPic = true,
+            //     };
+
+                
+                
+                
+            //}
         }
     }
 }
