@@ -84,6 +84,11 @@ namespace backend.Services
 
             var createdEvent = await _eventRepo.GetByIdAsync(1, eventResult.EventId!.Value);
 
+            if(createdEvent == null)
+            {
+                throw new InvalidOperationException("The created event could not be loaded");
+            }
+
             return createdEvent!.ToEventDto();
             
 
