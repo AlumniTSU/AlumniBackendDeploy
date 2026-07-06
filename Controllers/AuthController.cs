@@ -49,15 +49,22 @@ namespace backend.Controllers
             // // await _context.Users.AddAsync(userModel);
             // // await _context.SaveChangesAsync();
 
-            
+
             // await _userRepository.AddAsync(userModel);
 
             // return Ok();
 
-            
 
-            await _authService.RegisterAsync(userDto);
-            return Ok();
+            try
+            {
+                await _authService.RegisterAsync(userDto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+            
         }
 
         [HttpPost("login")]

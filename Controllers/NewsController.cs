@@ -28,7 +28,7 @@ namespace backend.Controllers
         // }
 
         [HttpPost]
-        public async Task<IActionResult> AddNews([FromBody]CreateNewsDto newsDto)
+        public async Task<IActionResult> AddNews([FromForm]CreateNewsDto newsDto)
         {
             var result = await _newsService.AddNewsAsync(newsDto);
 
@@ -40,6 +40,7 @@ namespace backend.Controllers
             return Ok(result);
         }
 
-    
+
+
   }
 }
