@@ -158,6 +158,11 @@ public partial class AlumniDBContext
 
 
     #region News
+
+
+    
+
+    
     public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto)
 {
     var newsId = new SqlParameter("@NewsID", SqlDbType.Int)
@@ -182,13 +187,10 @@ public partial class AlumniDBContext
 
     await Database.ExecuteSqlRawAsync(
         @"EXEC dbo.AddNews
-            @CategoryID,
             @TitleGeo,
             @TitleEng,
             @BodyGeo,
             @BodyEng,
-            @SlugGeo,
-            @SlugEng,
             @UserID,
             @NewsDate,
             @NewsID OUTPUT,
@@ -196,13 +198,10 @@ public partial class AlumniDBContext
             @IsAdded OUTPUT,
             @Error OUTPUT",
 
-        new SqlParameter("@CategoryID", newsDto.CategoryId),
         new SqlParameter("@TitleGeo", newsDto.TitleGeo),
         new SqlParameter("@TitleEng", newsDto.TitleEng),
         new SqlParameter("@BodyGeo", newsDto.BodyGeo),
         new SqlParameter("@BodyEng", newsDto.BodyEng),
-        new SqlParameter("@SlugGeo", newsDto.SlugGeo),
-        new SqlParameter("@SlugEng", newsDto.SlugEng),
         new SqlParameter("@UserID", newsDto.UserId),
         new SqlParameter("@NewsDate", newsDto.NewsDate),
 
