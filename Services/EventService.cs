@@ -28,7 +28,7 @@ namespace backend.Services
             return events.Select(s => s.ToEventDto());
         }
 
-        public async Task<EventDto?> GetByIdAsync(int languageId, int eventId)
+        public async Task<EventDetailDto?> GetByIdAsync(int languageId, int eventId)
         {
             var eventModel = await _eventRepo.GetByIdAsync(languageId, eventId);
 
@@ -37,10 +37,10 @@ namespace backend.Services
                 return null;
             }
 
-            return eventModel.ToEventDto();
+            return eventModel.ToEventDetailDto();
         }
 
-        public async Task<EventDto> CreateAsync(CreateEventWithPhotoDto dto, int createdBy)
+        public async Task<EventDetailDto> CreateAsync(CreateEventWithPhotoDto dto, int createdBy)
         {
             // Console.WriteLine($"[DEBUG] Photo null? {dto.Photo is null}, length: {dto.Photo?.Length ?? -1}");
             var createDto = new CreateEventDto
@@ -89,7 +89,7 @@ namespace backend.Services
                 throw new InvalidOperationException("The created event could not be loaded");
             }
 
-            return createdEvent!.ToEventDto();
+            return createdEvent!.ToEventDetailDto();
             
 
             // return new EventDto

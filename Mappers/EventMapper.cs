@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using backend.Dtos.Event;
 using backend.Entities;
 using backend.Results;
+using backend.Results.Event;
 
 namespace backend.Mappers
 {
@@ -18,8 +19,22 @@ namespace backend.Mappers
                 Title = eventModel.Title!,
                 Description = eventModel.Description!,
                 EventDate = eventModel.EventDate,
-                File = eventModel.File,
-                Extension = eventModel.Extension
+                // File = eventModel.File,
+                // Extension = eventModel.Extension
+            };
+        }
+
+        public static EventDetailDto ToEventDetailDto(this GetEventByIdResult eventModel)
+        {
+            return new EventDetailDto
+            {
+                EventId = eventModel.EventId,
+                Title = eventModel.Title!,
+                Description = eventModel.Description!,
+                EventDate = eventModel.EventDate,
+                ImageUrl = $"api/files/{eventModel.EventUid}"
+                // File = eventModel.File,
+                // Extension = eventModel.Extension
             };
         }
 

@@ -10,8 +10,8 @@ namespace backend.Services.Interfaces
     public interface IEventService
     {
         Task<IEnumerable<EventDto>> GetAllAsync(int languageId);
-        Task<EventDto?> GetByIdAsync(int languageId, int eventId);
-        Task<EventDto> CreateAsync(CreateEventWithPhotoDto dto, int createdBy);
+        Task<EventDetailDto?> GetByIdAsync(int languageId, int eventId);
+        Task<EventDetailDto> CreateAsync(CreateEventWithPhotoDto dto, int createdBy);
         Task UpdateAsync(int eventId, UpdateEventDto dto,int updatedBy);
         Task DeleteAsync(int eventId, int updatedBy);
     }

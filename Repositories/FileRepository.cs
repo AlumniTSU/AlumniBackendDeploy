@@ -6,6 +6,7 @@ using backend.Dtos.File;
 using backend.Entities;
 using backend.Repositories.Interfaces;
 using backend.Results;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repositories
 {
@@ -16,6 +17,11 @@ namespace backend.Repositories
         public FileRepository(AlumniDBContext context)
         {
             _context = context;
+        }
+
+        public async Task<Entities.File?> GetByGuidAsync(Guid guid)
+        {
+            return await _context.Files.FirstOrDefaultAsync(f => f.ContentGuid == guid);
         }
 
         public async Task<AddFileResult> AddFileAsync(AddFileDto dto)

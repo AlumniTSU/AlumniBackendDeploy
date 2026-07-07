@@ -9,6 +9,7 @@ using backend.Entities;
 using backend.Repositories.Interfaces;
 using backend.Mappers;
 using backend.Results;
+using backend.Results.Event;
 
 
 namespace backend.Repositories
@@ -28,7 +29,7 @@ namespace backend.Repositories
             // return events.Select(s => s.ToEventDto());
         }
 
-        public async Task<GetEventsResult?> GetByIdAsync(int languageId, int eventId)
+        public async Task<GetEventByIdResult?> GetByIdAsync(int languageId, int eventId)
         {
             // return await _context.Events.FirstOrDefaultAsync(s => s.EventId == eventId);
             return await _context.GetEventByLanguageIdAndEventIdAsync(languageId, eventId);

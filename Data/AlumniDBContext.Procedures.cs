@@ -8,6 +8,7 @@ using backend.Dtos.File;
 using backend.Dtos.News;
 using backend.Results.News;
 using backend.Results.Jobs;
+using backend.Results.Event;
 
 namespace backend.Entities;
 
@@ -16,9 +17,9 @@ public partial class AlumniDBContext
     #region Events
     public IQueryable<GetEventsResult> GetEvents(int languageId) => Database.SqlQuery<GetEventsResult>($"EXEC dbo.GetEventsByLanguageID @LanguageID={languageId}");
 
-    public async Task<GetEventsResult?> GetEventByLanguageIdAndEventIdAsync(int languageId, int eventId)
+    public async Task<GetEventByIdResult?> GetEventByLanguageIdAndEventIdAsync(int languageId, int eventId)
     {
-        var result = await Database.SqlQuery<GetEventsResult>($"EXEC GetEventsByLanguageIDAndEVentID @LanguageID={languageId}, @EventID={eventId}").ToListAsync();
+        var result = await Database.SqlQuery<GetEventByIdResult>($"EXEC GetEventsByLanguageIDAndEVentID @LanguageID={languageId}, @EventID={eventId}").ToListAsync();
 
         return result.SingleOrDefault();
     }

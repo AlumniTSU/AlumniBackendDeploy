@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace backend.Dtos.Event
 {
-    public class EventDto
-    {        
+    public class EventDetailDto
+    {
         public int EventId {get; set;}
         public string Title {get; set;} = string.Empty;
         public string Description {get; set;} = string.Empty;
         public DateTime? EventDate {get; set;}
+        public string? ImageUrl {get; set;}
         // public byte[]? File {get; set;}
         // public string? Extension {get; set;}
     }

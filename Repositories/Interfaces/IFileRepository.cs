@@ -9,6 +9,7 @@ namespace backend.Repositories.Interfaces
 {
     public interface IFileRepository
     {
+        Task<Entities.File?> GetByGuidAsync(Guid guid);
         Task<AddFileResult> AddFileAsync(AddFileDto dto);
     }
 }

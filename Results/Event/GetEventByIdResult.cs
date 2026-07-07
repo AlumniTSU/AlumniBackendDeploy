@@ -4,13 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using Microsoft.EntityFrameworkCore;
-
-
-namespace backend.Results
+namespace backend.Results.Event
 {
-    [Keyless]
-    public class GetEventsResult
+    public class GetEventByIdResult
     {
         [Column("EventID")]
         public int EventId {get; set;}
@@ -19,11 +15,11 @@ namespace backend.Results
         public string? Description {get; set;}
         public DateTime? EventDate {get; set;}
         public int CreatedBy {get; set;}
-        // public byte[]? File {get; set;}
-        // public bool? IsMainPic {get; set;}
-        // [Column("FileTypeID")]
-        // public int? FileTypeID {get; set;}
-        // public string? Extension {get; set;}
+        public byte[]? File {get; set;}
+        public bool? IsMainPic {get; set;}
+        [Column("FileTypeID")]
+        public int? FileTypeID {get; set;}
+        public string? Extension {get; set;}
         public int? PartnerId {get; set;}
         public DateTime CreatedAt {get; set;}
         public int UpdatedBy {get; set;}
