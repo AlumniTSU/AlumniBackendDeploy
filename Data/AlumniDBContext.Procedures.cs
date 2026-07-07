@@ -7,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using backend.Dtos.File;
 using backend.Dtos.News;
 using backend.Results.News;
+using backend.Results.Jobs;
 
 namespace backend.Entities;
 
@@ -222,4 +223,26 @@ public partial class AlumniDBContext
 
 
     #endregion
+
+    
+    
+
+
+
+    #region Jobs
+
+    public IQueryable<GetJobAdvertisementsResult> GetJobAdvertisements(
+    int languageId,
+    int advertisementTypeId)
+{
+    return Database.SqlQuery<GetJobAdvertisementsResult>(
+        $@"EXEC dbo.GetJobAdvertisementsByLanguageID
+            @LanguageID={languageId},
+            @AdvertisementTypeID={advertisementTypeId}");
+}
+    
+    
+    
+    #endregion
+
 }

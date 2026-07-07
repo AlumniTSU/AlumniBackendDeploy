@@ -1,0 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using backend.Entities;
+using backend.Dtos.Job;
+
+namespace backend.Services.Interfaces
+{
+    public interface IJobService
+    {
+        Task<IEnumerable<JobAdvertisementDto>> GetJobAdvertisementsAsync(int languageId, int advertisementTypeId);
+    }
+}
