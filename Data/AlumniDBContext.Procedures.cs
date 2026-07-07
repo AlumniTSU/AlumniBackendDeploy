@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 
 using backend.Dtos.File;
 using backend.Dtos.News;
+using backend.Dtos.Job;
 using backend.Results.News;
 using backend.Results.Jobs;
 using backend.Results.Event;
@@ -242,7 +243,84 @@ public partial class AlumniDBContext
             @AdvertisementTypeID={advertisementTypeId}");
 }
     
-    
+    public async Task<AddJobAdvertisementResult> AddJobAdvertisementAsync(
+    CreateJobAdvertisementDto dto,
+    int userId)
+{
+    var pAdvertisementId = new SqlParameter("@AdvertisementID", SqlDbType.Int)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var pAdvertisementGuid = new SqlParameter("@AdvertisementGUID", SqlDbType.UniqueIdentifier)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var pIsAdded = new SqlParameter("@IsAdded", SqlDbType.Bit)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var pError = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    await Database.ExecuteSqlRawAsync(
+        @"EXEC dbo.AddJobAdvertisement
+            @AdvertisementTypeID,
+            @IsAlumniAd,
+            @PartnerID,
+            @TitleGeo,
+            @TitleEng,
+            @DescriptionGeo,
+            @DescriptionEng,
+            @StartDate,
+            @EndDate,
+            @Salary,
+            @UserID,
+            @AdvertisementID OUTPUT,
+            @AdvertisementGUID OUTPUT,
+            @IsAdded OUTPUT,
+            @Error OUTPUT",
+
+        new SqlParameter("@AdvertisementTypeID", dto.AdvertisementTypeID),
+        new SqlParameter("@IsAlumniAd", dto.IsAlumniAd),
+        new SqlParameter("@PartnerID", (object?)dto.PartnerID ?? DBNull.Value),
+        new SqlParameter("@TitleGeo", dto.TitleGeo),
+        new SqlParameter("@TitleEng", dto.TitleEng),
+        new SqlParameter("@DescriptionGeo", dto.DescriptionGeo),
+        new SqlParameter("@DescriptionEng", dto.DescriptionEng),
+        new SqlParameter("@StartDate", dto.StartDate),
+        new SqlParameter("@EndDate", dto.EndDate),
+        new SqlParameter("@Salary", (object?)dto.Salary ?? DBNull.Value),
+        new SqlParameter("@UserID", userId),
+
+        pAdvertisementId,
+        pAdvertisementGuid,
+        pIsAdded,
+        pError
+    );
+
+    return new AddJobAdvertisementResult
+    {
+        AdvertisementID = pAdvertisementId.Value == DBNull.Value
+            ? null
+            : (int?)pAdvertisementId.Value,
+
+        AdvertisementGUID = pAdvertisementGuid.Value == DBNull.Value
+            ? null
+            : (Guid?)pAdvertisementGuid.Value,
+
+        IsAdded = pIsAdded.Value != DBNull.Value &&
+                  (bool)pIsAdded.Value,
+
+        Error = pError.Value == DBNull.Value
+            ? null
+            : pError.Value.ToString()
+    };
+}
     
     #endregion
 

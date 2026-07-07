@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using backend.Dtos.Job;
 using backend.Mappers;
 using backend.Repositories.Interfaces;
+using backend.Results.Jobs;
 using backend.Services.Interfaces;
 
 namespace backend.Services
@@ -24,5 +25,12 @@ namespace backend.Services
 
             return jobs.Select(j => j.ToJobDto());
         }
+
+        public async Task<AddJobAdvertisementResult> AddAsync(
+    CreateJobAdvertisementDto dto,
+    int userId)
+{
+    return await _jobRepo.AddAsync(dto, userId);
+}
     }
 }

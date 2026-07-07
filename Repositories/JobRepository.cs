@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using backend.Entities;
 using backend.Repositories.Interfaces;
 using backend.Results.Jobs;
+using backend.Dtos.Job;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repositories
@@ -23,5 +25,14 @@ namespace backend.Repositories
         {
             return await _context.GetJobAdvertisements(languageId, advertisementTypeId).ToListAsync();
         }
+
+        public async Task<AddJobAdvertisementResult> AddAsync(
+    CreateJobAdvertisementDto dto,
+    int userId)
+{
+    return await _context.AddJobAdvertisementAsync(dto, userId);
+}
+        
+        
     }
 }

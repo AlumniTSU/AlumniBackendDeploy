@@ -99,6 +99,15 @@ namespace backend.Services
 
         private string GenerateJwtToken(User user)
         {
+            var role = user.RoleId switch
+            {
+                1 => "Admin",
+                2 => "Alumni",
+                _=> throw new InvalidOperationException($"Unknown role: {user.RoleId}")
+            };
+            
+            
+            
             var claims = new List<Claim>
             {
                 new Claim(
@@ -123,7 +132,7 @@ namespace backend.Services
 
                 new Claim(
                     ClaimTypes.Role,
-                    user.RoleId.ToString()
+                    role
                 )
             };
 

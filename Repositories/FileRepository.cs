@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using backend.Dtos.File;
 using backend.Entities;
 using backend.Repositories.Interfaces;
@@ -21,7 +22,15 @@ namespace backend.Repositories
 
         public async Task<Entities.File?> GetByGuidAsync(Guid guid)
         {
-            return await _context.Files.FirstOrDefaultAsync(f => f.ContentGuid == guid);
+            var sw = Stopwatch.StartNew();
+
+            var file = await _context.Files.FirstOrDefaultAsync(f => f.ContentGuid == guid);
+            
+            sw.Stop();
+
+            Console.WriteLine($"Repository: {sw.ElapsedMilliseconds} ms");
+            
+            return file;
         }
 
         public async Task<AddFileResult> AddFileAsync(AddFileDto dto)

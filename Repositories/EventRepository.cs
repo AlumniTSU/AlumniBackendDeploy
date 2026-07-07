@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 using backend.Dtos.Event;
@@ -25,8 +26,16 @@ namespace backend.Repositories
 
         public async Task<IEnumerable<GetEventsResult>> GetEventsAsync(int languageId)
         {
-            return await _context.GetEvents(languageId).ToListAsync();
-            // return events.Select(s => s.ToEventDto());
+            var sw = Stopwatch.StartNew();
+
+            var eventVar = await _context.GetEvents(languageId).ToListAsync();
+            
+            sw.Stop();
+
+            Console.WriteLine($"Repository: {sw.ElapsedMilliseconds} ms");
+            
+            return eventVar;
+            
         }
 
         public async Task<GetEventByIdResult?> GetByIdAsync(int languageId, int eventId)
