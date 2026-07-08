@@ -20,5 +20,22 @@ namespace backend.Mappers
                 NewsDate = model.NewsDate
             };
         }
+
+        public static NewsDetailDto ToNewsDetailDto(this GetNewsByIdResult model)
+        {
+            return new NewsDetailDto
+            {
+                NewsId = model.NewsId,
+                NewsGuid = model.NewsGuid,
+                Title = model.Title,
+                Body = model.Body,
+                NewsDate = model.NewsDate,
+                FileName = model.FileName,
+                File = model.File,
+                FileTypeId = model.FileTypeId,
+                IsMainPic = model.IsMainPic,
+                Extension = model.Extension
+            };
+        }
     }
 }

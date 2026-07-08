@@ -26,6 +26,14 @@ namespace backend.Services
             return news.Select(n => n.ToNewsDto());
         }
 
+        public async Task<NewsDetailDto?> GetByIdAsync(int id, int languageId)
+        {
+            var news = await _newsRepo.GetByIdAsync(id, languageId);
+
+            return news?.ToNewsDetailDto();
+            
+        }
+
         public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto dto)
         {
             return await _newsRepo.AddNewsAsync(dto);

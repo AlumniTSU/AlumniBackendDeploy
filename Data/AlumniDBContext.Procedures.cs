@@ -169,6 +169,24 @@ public partial class AlumniDBContext
         return await Database.SqlQueryRaw<GetNewsByLanguageIdResult>("EXEC GetNewsByLanguageID @LanguageID", languageIdParam).ToListAsync();
     }
 
+
+    public async Task<GetNewsByIdResult?> GetNewsByIdAsync(int newsId, int languageId)
+    {
+        var languageParam = new SqlParameter("@LanguageID", languageId);
+        var newsParam = new SqlParameter("@NewsID", newsId);
+
+        var result = await Database
+    .SqlQueryRaw<GetNewsByIdResult>(
+        @"EXEC dbo.GetNewsByNewsIDandLanguageID
+            @LanguageID = @LanguageID,
+            @NewsID = @NewsID",
+        languageParam,
+        newsParam)
+    .ToListAsync();
+
+return result.FirstOrDefault();
+    }
+
     
     public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto)
 {

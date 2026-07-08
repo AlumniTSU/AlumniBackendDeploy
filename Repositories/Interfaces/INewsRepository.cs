@@ -11,6 +11,7 @@ namespace backend.Repositories.Interfaces
     {
         Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto);
         Task<IEnumerable<GetNewsByLanguageIdResult>> GetAllAsync(int languageId);
+        Task<GetNewsByIdResult?> GetByIdAsync(int id, int languageId);
         Task<EditNewsResult> EditAsync(int id, EditNewsDto newsDto, int userId);
         Task<DeleteNewsResult> DeleteAsync(int id, int userId);
     }

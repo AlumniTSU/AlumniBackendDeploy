@@ -31,6 +31,17 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id, [FromQuery] int languageId)
+        {
+            var news = await _newsService.GetByIdAsync(id, languageId);
+
+            if (news == null)
+                return NotFound();
+
+            return Ok(news);
+        }
+
         [HttpPost]
         // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddNews([FromForm]CreateNewsDto newsDto)
