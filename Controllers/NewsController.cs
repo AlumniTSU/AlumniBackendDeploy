@@ -58,5 +58,21 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [HttpDelete("{id:int}")]
+        // [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var userId = 66;//int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var result = await _newsService.DeleteAsync(id, userId);
+
+            if (!result.IsDeleted)
+            {
+                return BadRequest(result.Error);
+            }
+
+            return Ok(result);
+        }
+
   }
 }

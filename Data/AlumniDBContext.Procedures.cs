@@ -270,6 +270,38 @@ public async Task<EditNewsResult> EditNewsAsync(int id, EditNewsDto newsDto, int
     };
 }
 
+public async Task<DeleteNewsResult> DeleteNewsAsync(int id, int userId)
+{
+    var isDeleted = new SqlParameter("@IsDeleted", SqlDbType.Bit)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var error = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    await Database.ExecuteSqlRawAsync(
+        @"EXEC dbo.DeleteNews
+            @NewsID = @NewsID,
+            @UserID = @UserID,
+            @IsDeleted = @IsDeleted OUTPUT,
+            @Error = @Error OUTPUT",
+
+        new SqlParameter("@NewsID", id),
+        new SqlParameter("@UserID", userId),
+        isDeleted,
+        error
+    );
+
+    return new DeleteNewsResult
+    {
+        IsDeleted = isDeleted.Value != DBNull.Value && (bool)isDeleted.Value,
+        Error = error.Value == DBNull.Value ? null : error.Value.ToString()
+    };
+}
+
     #endregion
 
     

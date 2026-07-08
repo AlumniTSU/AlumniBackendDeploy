@@ -73,5 +73,10 @@ namespace backend.Services
         {
             return await _newsRepo.EditAsync(id, newsDto, userId);
         }
+
+        public async Task<DeleteNewsResult> DeleteAsync(int id, int userId)
+        {
+            return await _newsRepo.DeleteAsync(id, userId);
+        }
     }
 }
