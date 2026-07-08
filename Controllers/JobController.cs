@@ -55,6 +55,34 @@ namespace backend.Controllers
 
             return Ok(job);
         }
+
+        [HttpPut("{id:int}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateJobAdvertisementDto dto)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var result = await _jobService.UpdateAsync(id, dto, userId);
+
+            if (!result.IsEdited)
+                return BadRequest(result.Error);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id:int}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var result = await _jobService.DeleteAsync(id, userId);
+
+            if (!result.IsDeleted)
+                return BadRequest(result.Error);
+
+            return Ok(result);
+        }
     }
 
 }

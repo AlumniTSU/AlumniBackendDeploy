@@ -334,6 +334,101 @@ public async Task<GetJobAdvertisementsResult?> GetJobAdvertisementByIdAsync(
 
     return result.SingleOrDefault();
 }
+
+public async Task<UpdateJobAdvertisementResult> UpdateJobAdvertisementAsync(
+    int advertisementId,
+    UpdateJobAdvertisementDto dto,
+    int userId)
+{
+    var pIsEdited = new SqlParameter("@IsEdited", SqlDbType.Bit)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var pError = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    await Database.ExecuteSqlRawAsync(
+        @"EXEC dbo.EditJobAdvertisement
+            @AdvertisementID,
+            @AdvertisementTypeID,
+            @IsAlumniAd,
+            @PartnerID,
+            @TitleGeo,
+            @TitleEng,
+            @DescriptionGeo,
+            @DescriptionEng,
+            @StartDate,
+            @EndDate,
+            @Salary,
+            @UserID,
+            @IsEdited OUTPUT,
+            @Error OUTPUT",
+
+        new SqlParameter("@AdvertisementID", advertisementId),
+        new SqlParameter("@AdvertisementTypeID", dto.AdvertisementTypeID),
+        new SqlParameter("@IsAlumniAd", dto.IsAlumniAd),
+        new SqlParameter("@PartnerID", (object?)dto.PartnerID ?? DBNull.Value),
+        new SqlParameter("@TitleGeo", (object?)dto.TitleGeo ?? DBNull.Value),
+        new SqlParameter("@TitleEng", (object?)dto.TitleEng ?? DBNull.Value),
+        new SqlParameter("@DescriptionGeo", (object?)dto.DescriptionGeo ?? DBNull.Value),
+        new SqlParameter("@DescriptionEng", (object?)dto.DescriptionEng ?? DBNull.Value),
+        new SqlParameter("@StartDate", (object?)dto.StartDate ?? DBNull.Value),
+        new SqlParameter("@EndDate", (object?)dto.EndDate ?? DBNull.Value),
+        new SqlParameter("@Salary", (object?)dto.Salary ?? DBNull.Value),
+        new SqlParameter("@UserID", userId),
+
+        pIsEdited,
+        pError
+    );
+
+    return new UpdateJobAdvertisementResult
+    {
+        IsEdited = pIsEdited.Value != DBNull.Value && (bool)pIsEdited.Value,
+        Error = pError.Value == DBNull.Value ? null : pError.Value.ToString()
+    };
+}
+
+public async Task<DeleteJobAdvertisementResult> DeleteJobAdvertisementAsync(
+    int advertisementId,
+    int userId)
+{
+    var pIsDeleted = new SqlParameter("@IsDeleted", SqlDbType.Bit)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var pError = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    await Database.ExecuteSqlRawAsync(
+        @"EXEC dbo.DeleteJobAdvertisement
+            @AdvertisementID,
+            @UserID,
+            @IsDeleted OUTPUT,
+            @Error OUTPUT",
+
+        new SqlParameter("@AdvertisementID", advertisementId),
+        new SqlParameter("@UserID", userId),
+
+        pIsDeleted,
+        pError
+    );
+
+    return new DeleteJobAdvertisementResult
+    {
+        IsDeleted = pIsDeleted.Value != DBNull.Value &&
+                    (bool)pIsDeleted.Value,
+
+        Error = pError.Value == DBNull.Value
+            ? null
+            : pError.Value.ToString()
+    };
+}
     
     #endregion
 

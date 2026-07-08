@@ -12,8 +12,9 @@ namespace backend.Services.Interfaces
     {
         Task<IEnumerable<JobAdvertisementDto>> GetJobAdvertisementsAsync(int languageId, int advertisementTypeId);
         Task<AddJobAdvertisementResult> AddAsync(CreateJobAdvertisementDto dto, int userId);
-        Task<JobAdvertisementDto?> GetByIdAsync(
-    int languageId,
-    int advertisementId);
+        Task<JobAdvertisementDto?> GetByIdAsync(int languageId, int advertisementId);
+        Task<UpdateJobAdvertisementResult> UpdateAsync(int advertisementId, UpdateJobAdvertisementDto dto, int userId);
+        Task<DeleteJobAdvertisementResult> DeleteAsync(int advertisementId, int userId);
+
     }
 }

@@ -26,24 +26,26 @@ namespace backend.Repositories
             return await _context.GetJobAdvertisements(languageId, advertisementTypeId).ToListAsync();
         }
 
-        public async Task<AddJobAdvertisementResult> AddAsync(
-    CreateJobAdvertisementDto dto,
-    int userId)
-{
-    return await _context.AddJobAdvertisementAsync(dto, userId);
-}
+        public async Task<AddJobAdvertisementResult> AddAsync(CreateJobAdvertisementDto dto, int userId)
+        {
+            return await _context.AddJobAdvertisementAsync(dto, userId);
+        }
         
         
 
-public async Task<GetJobAdvertisementsResult?> GetByIdAsync(
-    int languageId,
-    int advertisementId)
-{
-    return await _context.GetJobAdvertisementByIdAsync(
-        languageId,
-        advertisementId);
-}
+        public async Task<GetJobAdvertisementsResult?> GetByIdAsync(int languageId, int advertisementId)
+        {
+            return await _context.GetJobAdvertisementByIdAsync(languageId, advertisementId);
+        }
 
-        
+        public async Task<UpdateJobAdvertisementResult> UpdateAsync(int advertisementId, UpdateJobAdvertisementDto dto, int userId)
+        {
+            return await _context.UpdateJobAdvertisementAsync(advertisementId, dto, userId);
+        }
+
+        public async Task<DeleteJobAdvertisementResult> DeleteAsync(int advertisementId, int userId)
+        {
+            return await _context.DeleteJobAdvertisementAsync(advertisementId, userId);
+        }
     }
 }
