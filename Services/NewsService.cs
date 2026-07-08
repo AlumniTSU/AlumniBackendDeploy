@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Dtos.File;
 using backend.Dtos.News;
+using backend.Mappers;
 using backend.Repositories.Interfaces;
 using backend.Results.News;
 using backend.Services.Interfaces;
@@ -16,6 +17,13 @@ namespace backend.Services
         public NewsService(INewsRepository newsRepo)
         {
             _newsRepo = newsRepo;
+        }
+
+        public async Task<IEnumerable<NewsDto>> GetAllAsync(int languageId)
+        {
+            var news = await _newsRepo.GetAllAsync(languageId);
+
+            return news.Select(n => n.ToNewsDto());
         }
 
         public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto dto)

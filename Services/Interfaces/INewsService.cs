@@ -10,5 +10,6 @@ namespace backend.Services.Interfaces
     public interface INewsService
     {
         Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto);
+        Task<IEnumerable<NewsDto>> GetAllAsync(int languageId);
     }
 }

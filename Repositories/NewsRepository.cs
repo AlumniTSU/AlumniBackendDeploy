@@ -16,6 +16,12 @@ namespace backend.Repositories
         {
             _context = context;
         }
+
+        public async Task<IEnumerable<GetNewsByLanguageIdResult>> GetAllAsync(int languageId)
+        {
+            return await _context.GetNewsByLanguageIdAsync(languageId);
+        }
+
         
         public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto)
         {

@@ -162,8 +162,12 @@ public partial class AlumniDBContext
 
     #region News
 
+    public async Task<IEnumerable<GetNewsByLanguageIdResult>> GetNewsByLanguageIdAsync(int languageId)
+    {
+        var languageIdParam = new SqlParameter("@LanguageID", languageId);
 
-    
+        return await Database.SqlQueryRaw<GetNewsByLanguageIdResult>("EXEC GetNewsByLanguageID @LanguageID", languageIdParam).ToListAsync();
+    }
 
     
     public async Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto)

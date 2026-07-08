@@ -10,5 +10,7 @@ namespace backend.Repositories.Interfaces
     public interface INewsRepository
     {
         Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto);
+        Task<IEnumerable<GetNewsByLanguageIdResult>> GetAllAsync(int languageId);
     }
+    
 }
