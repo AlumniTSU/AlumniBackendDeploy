@@ -28,6 +28,9 @@ namespace backend.Repositories
             return await _context.AddNewsAsync(newsDto);
         }
 
-        
+        public async Task<EditNewsResult> EditAsync(int id, EditNewsDto dto, int userId)
+        {
+            return await _context.EditNewsAsync(id, dto, userId);
+        }
     }
 }

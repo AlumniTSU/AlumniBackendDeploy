@@ -58,7 +58,7 @@ namespace backend.Controllers
 
         [HttpPut("{id:int}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateJobAdvertisementDto dto)
+        public async Task<IActionResult> Update([FromRoute]int id, [FromBody] UpdateJobAdvertisementDto dto)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 

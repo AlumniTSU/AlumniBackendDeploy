@@ -17,12 +17,12 @@ namespace backend.Dtos.News
 
     public DateTime NewsDate { get; set; }
 
-    public string? FileName { get; set; }
+    // public string? FileName { get; set; }
 
-    public byte[]? File { get; set; }
+    // public byte[]? File { get; set; }
 
-    public int? FileTypeId { get; set; }
+    // public int? FileTypeId { get; set; }
 
-    public string? Extension { get; set; }
+    // public string? Extension { get; set; }
     }
 }

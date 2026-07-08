@@ -227,6 +227,48 @@ public partial class AlumniDBContext
     };
 }
 
+public async Task<EditNewsResult> EditNewsAsync(int id, EditNewsDto newsDto, int userId)
+{
+    var isEdited = new SqlParameter("@IsEdited", SqlDbType.Bit)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var error = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    await Database.ExecuteSqlRawAsync(
+    @"EXEC dbo.EditNews
+        @NewsID = @NewsID,
+        @TitleGeo = @TitleGeo,
+        @TitleEng = @TitleEng,
+        @BodyGeo = @BodyGeo,
+        @BodyEng = @BodyEng,
+        @NewsDate = @NewsDate,
+        @UserID = @UserID,
+        @IsEdited = @IsEdited OUTPUT,
+        @Error = @Error OUTPUT",
+
+    new SqlParameter("@NewsID", id),
+    new SqlParameter("@TitleGeo", (object?)newsDto.TitleGeo ?? DBNull.Value),
+    new SqlParameter("@TitleEng", (object?)newsDto.TitleEng ?? DBNull.Value),
+    new SqlParameter("@BodyGeo", (object?)newsDto.BodyGeo ?? DBNull.Value),
+    new SqlParameter("@BodyEng", (object?)newsDto.BodyEng ?? DBNull.Value),
+    new SqlParameter("@NewsDate", (object?)newsDto.NewsDate ?? DBNull.Value),
+    new SqlParameter("@UserID", userId),
+
+    isEdited,
+    error
+);
+
+    return new EditNewsResult
+    {
+        IsEdited = isEdited.Value != DBNull.Value && (bool)isEdited.Value,
+        Error = error.Value == DBNull.Value ? null : error.Value.ToString()
+    };
+}
 
     #endregion
 

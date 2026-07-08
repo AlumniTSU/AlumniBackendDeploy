@@ -68,5 +68,10 @@ namespace backend.Services
                 
             //}
         }
+
+        public async Task<EditNewsResult> EditAsync(int id, EditNewsDto newsDto, int userId)
+        {
+            return await _newsRepo.EditAsync(id, newsDto, userId);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace backend.Services.Interfaces
     {
         Task<AddNewsResult> AddNewsAsync(CreateNewsDto newsDto);
         Task<IEnumerable<NewsDto>> GetAllAsync(int languageId);
+        Task<EditNewsResult> EditAsync(int id, EditNewsDto newsDto, int userId); 
     }
 }

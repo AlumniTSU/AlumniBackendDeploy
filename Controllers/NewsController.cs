@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using backend.Dtos.News;
 using backend.Results.News;
 using backend.Services.Interfaces;
@@ -44,7 +45,17 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Edit([FromRoute] int id, [FromBody]EditNewsDto newsDto)
+        {
+            var userId = 66;//int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var result = await _newsService.EditAsync(id, newsDto, userId);
 
+            if (!result.IsEdited)
+                return BadRequest(result.Error);
+
+            return Ok(result);
+        }
 
   }
 }
