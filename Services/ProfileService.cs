@@ -17,13 +17,15 @@ namespace backend.Services
         private readonly IUserRepository _userRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly IAlumniProfileRepository _profileRepository;
+        private readonly IFileRepository _fileRepository;
         
 
-        public ProfileService(IUserRepository userRepository, IAlumniProfileRepository profileRepository, IStudentRepository studentRepository)
+        public ProfileService(IUserRepository userRepository, IAlumniProfileRepository profileRepository, IStudentRepository studentRepository, IFileRepository fileRepository)
         {
             _userRepository = userRepository;
             _profileRepository = profileRepository;
             _studentRepository = studentRepository;
+            _fileRepository = fileRepository;
         }
 
         public async Task<ProfileDto?> GetProfileAsync(int userId)
