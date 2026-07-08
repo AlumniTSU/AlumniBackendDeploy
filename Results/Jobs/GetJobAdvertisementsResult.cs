@@ -19,8 +19,8 @@ namespace backend.Results.Jobs
     public DateTime EndDate { get; set; }
     public string? Salary { get; set; }
 
-    public int AddedByUserID { get; set; }
-    public string AddedByUser { get; set; } = string.Empty;
+    public int AddedByUserID { get; set; } 
+    public string? AddedByUser { get; set; } 
 
     public int? PartnerID { get; set; }
     public string? PartnerName { get; set; }

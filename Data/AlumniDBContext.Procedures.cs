@@ -321,6 +321,19 @@ public partial class AlumniDBContext
             : pError.Value.ToString()
     };
 }
+
+public async Task<GetJobAdvertisementsResult?> GetJobAdvertisementByIdAsync(
+    int languageId,
+    int advertisementId)
+{
+    var result = await Database.SqlQuery<GetJobAdvertisementsResult>(
+        $@"EXEC dbo.GetActiveJobAdvertisementsByIDandLanguageID
+            @LanguageID={languageId},
+            @AdvertisementID={advertisementId}")
+        .ToListAsync();
+
+    return result.SingleOrDefault();
+}
     
     #endregion
 

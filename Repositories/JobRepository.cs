@@ -34,5 +34,16 @@ namespace backend.Repositories
 }
         
         
+
+public async Task<GetJobAdvertisementsResult?> GetByIdAsync(
+    int languageId,
+    int advertisementId)
+{
+    return await _context.GetJobAdvertisementByIdAsync(
+        languageId,
+        advertisementId);
+}
+
+        
     }
 }

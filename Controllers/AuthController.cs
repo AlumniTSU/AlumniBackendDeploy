@@ -18,6 +18,7 @@ using backend.Mappers;
 using backend.Repositories.Interfaces;
 
 using backend.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace backend.Controllers
 {
@@ -81,6 +82,17 @@ namespace backend.Controllers
 
             return Ok(new {token});
         }
+
+
+        [HttpGet("generate-admin-hash")]
+        public IActionResult GenerateAdminHash()
+        {
+            var hasher = new PasswordHasher<User>();
+            var hash = hasher.HashPassword(null!, "admin123");
+
+            return Ok(hash);
+        }
+
 
 
         // [Authorize]

@@ -23,7 +23,7 @@ namespace backend.Controllers
         
         
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery]int languageId, int advertisementTypeId)
+        public async Task<IActionResult> GetAll([FromQuery]int advertisementTypeId, [FromQuery] int languageId = 1)
         {
             var jobs = await _jobService.GetJobAdvertisementsAsync(languageId, advertisementTypeId);
 
@@ -31,17 +31,29 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Add(CreateJobAdvertisementDto dto)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Add([FromBody]CreateJobAdvertisementDto dto)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
+            Console.WriteLine($"UserId: {userId}");
+            //var userId = 61;
             var result = await _jobService.AddAsync(dto, userId);
 
             if (!result.IsAdded)
                 return BadRequest(result.Error);
 
             return Ok(result);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById([FromRoute] int id, [FromQuery]int languageId)
+        {
+            var job = await _jobService.GetByIdAsync(languageId, id);
+
+            if (job == null)
+                return NotFound();
+
+            return Ok(job);
         }
     }
 

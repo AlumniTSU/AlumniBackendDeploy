@@ -32,5 +32,19 @@ namespace backend.Services
 {
     return await _jobRepo.AddAsync(dto, userId);
 }
+
+public async Task<JobAdvertisementDto?> GetByIdAsync(
+    int languageId,
+    int advertisementId)
+{
+    var job = await _jobRepo.GetByIdAsync(
+        languageId,
+        advertisementId);
+
+    if (job == null)
+        return null;
+
+    return job.ToJobDto();
+}
     }
 }
