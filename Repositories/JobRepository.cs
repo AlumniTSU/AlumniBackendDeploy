@@ -21,9 +21,9 @@ namespace backend.Repositories
 
         
         
-        public async Task<IEnumerable<GetJobAdvertisementsResult>> GetAllAsync(int languageId, int advertisementTypeId)
+        public async Task<IEnumerable<GetJobAdvertisementsResult>> GetAllAsync(int languageId)
         {
-            return await _context.GetJobAdvertisements(languageId, advertisementTypeId).ToListAsync();
+            return await _context.GetJobAdvertisements(languageId).ToListAsync();
         }
 
         public async Task<AddJobAdvertisementResult> AddAsync(CreateJobAdvertisementDto dto, int userId)
@@ -46,6 +46,11 @@ namespace backend.Repositories
         public async Task<DeleteJobAdvertisementResult> DeleteAsync(int advertisementId, int userId)
         {
             return await _context.DeleteJobAdvertisementAsync(advertisementId, userId);
+        }
+
+        public async Task<IEnumerable<GetJobAdvertisementsResult>> GetActiveAsync(int languageId)
+        {
+            return await _context.GetActiveJobAdvertisements(languageId).ToListAsync();
         }
     }
 }

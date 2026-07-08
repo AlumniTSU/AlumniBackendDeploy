@@ -10,11 +10,12 @@ namespace backend.Services.Interfaces
 {
     public interface IJobService
     {
-        Task<IEnumerable<JobAdvertisementDto>> GetJobAdvertisementsAsync(int languageId, int advertisementTypeId);
+        Task<IEnumerable<JobAdvertisementDto>> GetJobAdvertisementsAsync(int languageId);
         Task<AddJobAdvertisementResult> AddAsync(CreateJobAdvertisementDto dto, int userId);
         Task<JobAdvertisementDto?> GetByIdAsync(int languageId, int advertisementId);
         Task<UpdateJobAdvertisementResult> UpdateAsync(int advertisementId, UpdateJobAdvertisementDto dto, int userId);
         Task<DeleteJobAdvertisementResult> DeleteAsync(int advertisementId, int userId);
 
+        Task<IEnumerable<JobAdvertisementDto>> GetActiveJobAdvertisementsAsync(int languageId);
     }
 }

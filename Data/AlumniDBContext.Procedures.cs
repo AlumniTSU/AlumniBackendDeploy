@@ -311,14 +311,21 @@ public async Task<DeleteNewsResult> DeleteNewsAsync(int id, int userId)
 
     #region Jobs
 
+//for admin
     public IQueryable<GetJobAdvertisementsResult> GetJobAdvertisements(
-    int languageId,
-    int advertisementTypeId)
+    int languageId)
 {
     return Database.SqlQuery<GetJobAdvertisementsResult>(
         $@"EXEC dbo.GetJobAdvertisementsByLanguageID
-            @LanguageID={languageId},
-            @AdvertisementTypeID={advertisementTypeId}");
+            @LanguageID={languageId}");
+}
+
+//for user
+public IQueryable<GetJobAdvertisementsResult> GetActiveJobAdvertisements(int languageId)
+{
+    return Database.SqlQuery<GetJobAdvertisementsResult>(
+        $@"EXEC dbo.GetActiveJobAdvertisementsByLanguageID
+            @LanguageID={languageId}");
 }
     
     public async Task<AddJobAdvertisementResult> AddJobAdvertisementAsync(

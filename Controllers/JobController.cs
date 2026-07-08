@@ -21,11 +21,20 @@ namespace backend.Controllers
             _jobService = jobService;
         }
         
-        
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery]int advertisementTypeId, [FromQuery] int languageId = 1)
+        public async Task<IActionResult> GetActive([FromQuery] int languageId = 1)
         {
-            var jobs = await _jobService.GetJobAdvertisementsAsync(languageId, advertisementTypeId);
+            var jobs = await _jobService.GetActiveJobAdvertisementsAsync(languageId);
+
+            return Ok(jobs);
+        }
+        
+        
+        [HttpGet("admin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAll([FromQuery] int languageId = 1)
+        {
+            var jobs = await _jobService.GetJobAdvertisementsAsync(languageId);
 
             return Ok(jobs);
         }

@@ -10,7 +10,9 @@ namespace backend.Repositories.Interfaces
 {
     public interface IJobRepository
     {
-        Task<IEnumerable<GetJobAdvertisementsResult>> GetAllAsync(int languageId, int advertisementTypeId);
+        Task<IEnumerable<GetJobAdvertisementsResult>> GetActiveAsync(int languageId);
+        
+        Task<IEnumerable<GetJobAdvertisementsResult>> GetAllAsync(int languageId);
         Task<AddJobAdvertisementResult> AddAsync(CreateJobAdvertisementDto dto, int userId);
         Task<GetJobAdvertisementsResult?> GetByIdAsync(int languageId, int advertisementId);
         Task<UpdateJobAdvertisementResult> UpdateAsync(int advertisementId, UpdateJobAdvertisementDto dto, int userId);

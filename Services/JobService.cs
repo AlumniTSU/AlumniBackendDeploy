@@ -19,9 +19,9 @@ namespace backend.Services
             _jobRepo = jobRepo;
         }
 
-        public async Task<IEnumerable<JobAdvertisementDto>> GetJobAdvertisementsAsync(int languageId, int advertisementTypeId)
+        public async Task<IEnumerable<JobAdvertisementDto>> GetJobAdvertisementsAsync(int languageId)
         {
-            var jobs = await _jobRepo.GetAllAsync(languageId, advertisementTypeId);
+            var jobs = await _jobRepo.GetAllAsync(languageId);
 
             return jobs.Select(j => j.ToJobDto());
         }
@@ -49,6 +49,13 @@ namespace backend.Services
         public async Task<DeleteJobAdvertisementResult> DeleteAsync(int advertisementId, int userId)
         {
             return await _jobRepo.DeleteAsync(advertisementId, userId);
+        }
+
+        public async Task<IEnumerable<JobAdvertisementDto>> GetActiveJobAdvertisementsAsync(int languageId)
+        {
+            var jobs = await _jobRepo.GetActiveAsync(languageId);
+
+            return jobs.Select(j => j.ToJobDto());
         }
     }
 }
