@@ -32,9 +32,10 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddNews([FromForm]CreateNewsDto newsDto)
         {
+            
             var result = await _newsService.AddNewsAsync(newsDto);
 
             if (!result.IsAdded)
