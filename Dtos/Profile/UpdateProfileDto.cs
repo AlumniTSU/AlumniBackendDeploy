@@ -15,6 +15,5 @@ namespace backend.Dtos.Profile
         public string? ContactEmail {get; set;}
         public string? ContactPhoneNumber {get; set;}
         public string? AdditionalInformation {get; set;}
-        public IFormFile? ProfilePicture { get; set; }
     }
 }

@@ -68,7 +68,7 @@ namespace backend.Controllers
 
         [Authorize]
         [HttpPut("me")]
-        public async Task<IActionResult> UpdateProfile([FromForm]UpdateProfileDto dto)
+        public async Task<IActionResult> UpdateProfile(UpdateProfileDto dto)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
