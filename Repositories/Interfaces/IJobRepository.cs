@@ -6,6 +6,7 @@ using backend.Dtos.Job;
 using backend.Entities;
 using backend.Results.Jobs;
 
+
 namespace backend.Repositories.Interfaces
 {
     public interface IJobRepository

@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backend.Dtos.Feedback;
 using backend.Dtos.Job;
 using backend.Mappers;
 using backend.Repositories.Interfaces;
+using backend.Results.Feedback;
 using backend.Results.Jobs;
 using backend.Services.Interfaces;
 
@@ -57,5 +59,7 @@ namespace backend.Services
 
             return jobs.Select(j => j.ToJobDto());
         }
+
+        
     }
 }

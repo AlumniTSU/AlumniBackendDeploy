@@ -6,6 +6,7 @@ using backend.Entities;
 using backend.Dtos.Job;
 using backend.Results.Jobs;
 
+
 namespace backend.Services.Interfaces
 {
     public interface IJobService
@@ -17,5 +18,6 @@ namespace backend.Services.Interfaces
         Task<DeleteJobAdvertisementResult> DeleteAsync(int advertisementId, int userId);
 
         Task<IEnumerable<JobAdvertisementDto>> GetActiveJobAdvertisementsAsync(int languageId);
+
     }
 }

@@ -7,9 +7,11 @@ using Microsoft.Data.SqlClient;
 using backend.Dtos.File;
 using backend.Dtos.News;
 using backend.Dtos.Job;
+using backend.Dtos.Feedback;
 using backend.Results.News;
 using backend.Results.Jobs;
 using backend.Results.Event;
+using backend.Results.Feedback;
 
 namespace backend.Entities;
 
@@ -333,6 +335,58 @@ public async Task<DeleteNewsResult> DeleteNewsAsync(int id, int userId)
     
 
     #region Jobs
+
+    public async Task<AddFeedbackResult> AddFeedbackAsync(
+    CreateFeedbackDto dto,
+    int userId)
+{
+    var pFeedbackId = new SqlParameter("@FeedbackID", SqlDbType.Int)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var pIsAdded = new SqlParameter("@IsAdded", SqlDbType.Bit)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    var pError = new SqlParameter("@Error", SqlDbType.NVarChar, -1)
+    {
+        Direction = ParameterDirection.Output
+    };
+
+    await Database.ExecuteSqlRawAsync(
+        @"EXEC dbo.AddFeedback
+            @UserID,
+            @Content,
+            @Rating,
+            @FeedbackID OUTPUT,
+            @IsAdded OUTPUT,
+            @Error OUTPUT",
+
+        new SqlParameter("@UserID", userId),
+        new SqlParameter("@Content", dto.Content),
+        new SqlParameter("@Rating", (object?)dto.Rating ?? DBNull.Value),
+
+        pFeedbackId,
+        pIsAdded,
+        pError
+    );
+
+    return new AddFeedbackResult
+    {
+        FeedbackID = pFeedbackId.Value == DBNull.Value
+            ? null
+            : (int?)pFeedbackId.Value,
+
+        IsAdded = pIsAdded.Value != DBNull.Value &&
+                  (bool)pIsAdded.Value,
+
+        Error = pError.Value == DBNull.Value
+            ? null
+            : pError.Value.ToString()
+    };
+}
 
 //for admin
     public IQueryable<GetJobAdvertisementsResult> GetJobAdvertisements(

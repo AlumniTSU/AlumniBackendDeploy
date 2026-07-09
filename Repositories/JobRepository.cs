@@ -9,6 +9,7 @@ using backend.Dtos.Job;
 
 using Microsoft.EntityFrameworkCore;
 
+
 namespace backend.Repositories
 {
     public class JobRepository : IJobRepository
@@ -52,5 +53,6 @@ namespace backend.Repositories
         {
             return await _context.GetActiveJobAdvertisements(languageId).ToListAsync();
         }
+
     }
 }

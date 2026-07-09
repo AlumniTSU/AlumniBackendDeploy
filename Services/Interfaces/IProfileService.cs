@@ -15,5 +15,6 @@ namespace backend.Services.Interfaces
         // Task<bool> UploadProfilePhotoAsync(int userId, IFormFile file);
 
         Task<bool> UpdatePasswordAsync(int userId, UpdatePasswordDto dto);
+        
     }
 }
