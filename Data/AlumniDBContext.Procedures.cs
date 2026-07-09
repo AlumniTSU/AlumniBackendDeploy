@@ -12,11 +12,29 @@ using backend.Results.News;
 using backend.Results.Jobs;
 using backend.Results.Event;
 using backend.Results.Feedback;
+using backend.Results.Statistics;
 
 namespace backend.Entities;
 
 public partial class AlumniDBContext
 {
+    #region Admin
+
+    public IQueryable<StatisticsResult> GetStatistics(
+    DateTime? fromDate,
+    DateTime? toDate)
+{
+    return Database.SqlQuery<StatisticsResult>(
+        $@"EXEC dbo.GetStatistics
+            @FromTime={fromDate},
+            @ToDate={toDate}");
+}
+    
+
+    #endregion
+    
+    
+    
     #region File
 
     public async Task<AddFileResult> AddFileAsync(AddFileDto dto)
