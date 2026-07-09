@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using backend.Dtos.Feedback;
 using backend.Entities;
 using backend.Repositories.Interfaces;
@@ -19,6 +20,11 @@ namespace backend.Repositories
         public async Task<AddFeedbackResult> AddAsync(CreateFeedbackDto dto,int userId)
         {
             return await _context.AddFeedbackAsync(dto, userId);
+        }
+
+        public async Task<IEnumerable<GetFeedbackResult>> GetAllAsync()
+        {
+            return await _context.GetFeedback().ToListAsync();
         }
     }
 }

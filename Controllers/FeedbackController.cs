@@ -38,5 +38,14 @@ namespace backend.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet]
+        // [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAll()
+        {
+            var feedback = await _feedbackService.GetAllAsync();
+
+            return Ok(feedback);
+        }
     }
 }

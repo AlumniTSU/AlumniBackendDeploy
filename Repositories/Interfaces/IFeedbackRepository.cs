@@ -10,5 +10,6 @@ namespace backend.Repositories.Interfaces
     public interface IFeedbackRepository
     {
         Task<AddFeedbackResult> AddAsync(CreateFeedbackDto dto, int userId);
+        Task<IEnumerable<GetFeedbackResult>> GetAllAsync();
     }
 }

@@ -170,6 +170,7 @@ public partial class AlumniDBContext
     #endregion
 
 
+
     #region News
 
     public async Task<IEnumerable<GetNewsByLanguageIdResult>> GetNewsByLanguageIdAsync(int languageId)
@@ -332,9 +333,13 @@ public async Task<DeleteNewsResult> DeleteNewsAsync(int id, int userId)
 
     #endregion
 
-    
 
-    #region Jobs
+
+    #region Feedback
+    public IQueryable<GetFeedbackResult> GetFeedback()
+    {
+        return Database.SqlQuery<GetFeedbackResult>($"EXEC dbo.GetFeedback");
+    }
 
     public async Task<AddFeedbackResult> AddFeedbackAsync(
     CreateFeedbackDto dto,
@@ -388,6 +393,14 @@ public async Task<DeleteNewsResult> DeleteNewsAsync(int id, int userId)
     };
 }
 
+
+    #endregion
+
+
+
+    #region Jobs
+
+    
 //for admin
     public IQueryable<GetJobAdvertisementsResult> GetJobAdvertisements(
     int languageId)
