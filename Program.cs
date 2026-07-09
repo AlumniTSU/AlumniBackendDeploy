@@ -81,6 +81,7 @@ builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IFileRepository, FileRepository>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
@@ -90,6 +91,7 @@ builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 
 
 builder.Services.AddAuthentication(options =>

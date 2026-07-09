@@ -4,14 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Dtos.Feedback;
 using backend.Entities;
+using backend.Repositories.Interfaces;
 using backend.Results.Feedback;
 
 namespace backend.Repositories
 {
-    public class FeedBackRepository
+    public class FeedbackRepository : IFeedbackRepository
     {
         private readonly AlumniDBContext _context;
-        public FeedBackRepository(AlumniDBContext context)
+        public FeedbackRepository(AlumniDBContext context)
         {
             _context = context;
         }
